@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>js 注册</title>
+ </head>
+ <body>
+  <header>
+	<a href="https://jd.com"><img src=""></a>
+	<span>欢迎注册</span>
+	<span>已有账号</span>
+	<a href="#">请登录</a>
+  </header>
+	<section>
+		<div>
+			<form>
+				<div style="border:1px solid #000 ">
+				<span>用户名</span>
+				<input type="text" placeholder="您的账户名和登录名"/>
+				</div>
+				<br/>
+				<div style="border:1px solid #000">
+					<span>设置密码</span>
+					<input type="password" placeholder="建议至少使用两种字符组合"/>
+				</div>
+				<br/>
+				<div style="border:1px solid #000">
+					<span>中国+86</span>
+					<input type="text" placeholder="建议使用常用搜手机"/>
+				</div>
+				<br/>
+				<div style="border:1px solid #000">
+					<span>验证码</span>
+					<input type="text"placeholder="请输入验证码"/>
+				</div>
+				<br/>
+				<div style="border:1px solid #000">
+					<span>手机验证码</span>
+					<input type="text" placeholder="请输入手机验证码"/>
+				</div>
+				<br/>
+				<input id="content" type="checkbox"/>
+				<span><label for="content">我已阅读并同意</label><mark><a href="">《京东用户注册协议》</a></mark></span>
+				
+			</form>
+		</div>
+	</section>
+ </body>
+</html>

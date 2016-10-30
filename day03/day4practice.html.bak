@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>完善个人信息</title>
+	</head>
+	<body>
+		<p><h2>请完善个人信息：</h2></p>
+		<form>
+		<table border="1px"cellspacing="0px">
+			<tr>
+				<td>姓名：</td>
+				<td colspan="2"><input  type="text"/></td>
+				<td rowspan="4">
+					<details>
+						<summary>各项<mark>技能</mark>指数</summary>
+						<ul type="none">
+							<li>HTML:<meter max="100" value="100"></meter></li>
+							<li>CSS3:<meter max="100" value="90"></meter></li>
+							<li>AJAX:<meter max="100" value="50"></meter></li>
+						</ul>
+					</details>
+				</td>
+			</tr>
+			<tr>
+				<td>性别：</td>
+				<td colspan="2">
+				<label>
+					<input id="man" name="gender" type="radio"checked/>男士
+				</label>
+		
+					<input id="woman" name="gender" type="radio"/>
+				<label for="woman">女士</label>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+					<td colspan="2">
+						<label>
+							<input  type="checkbox"/>请不要公开我的个人信息
+						</label>
+					</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<input type="button"value="保存" />
+					<input type="reset"/>
+				</td>
+			</tr>
+		</table>
+		</form>
+		<details>
+			<summary>自我介绍</summary>
+			<div>性别：男</div>
+			<div>爱好：计算机</div>
+		</details>
+		设备1：<meter max="4" value="2"></meter>
+		<br/>
+		当前时间:<time>2015年10月9日</time>
+		<fieldset>
+			<legend>必填信息</legend>
+			<div>用户名称：<input type="text"/></div>
+			<div>用户密码：<input type="password"/></div>
+		</fieldset>
+		<h2>搜索“<mark>达内科技</mark>”</h2>
+	</body>
+</html>

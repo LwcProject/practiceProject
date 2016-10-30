@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>列表</title>
+	</head>
+	<body>
+		<h2>无序列表</h2>
+		<ul>
+			<li>中文</li>
+			<li>英文</li>
+			<li>俄语</li>
+		</ul>
+		<br/>
+		<h2>有序列表</h2>
+		<ol type="a" start="3"><!--type：选择何种编号 start 代表从第几个顺序开始-->
+			<li>广东省</li>
+			<li>广西省</li>
+			<li>福建省</li>
+			<li>江西省</li>
+		</ol>
+		<br />
+		<h2>自定义列表</h2>
+		<dl>
+			<dt>
+			<img src="../img/icon.png"/></dt>
+			<dd>列表内容</dd>
+		</dl>
+	</body>
+
+</html>

@@ -1,0 +1,245 @@
+body,h1,h2,ul{
+	padding:0px;
+	margin:0px;
+}
+body{
+	font-size:14px;
+}
+.rf{
+	float:right;
+}
+.lf{
+	float:left;
+}
+.clear:after{
+	content:"";
+	display:table;
+	clear:both;
+}
+/*顶部*/
+header{
+	position:relative;
+	border-bottom:2px solid #F2F2F2;
+}
+.questionnaire{
+	position:absolute;
+	top:345px;
+	right:0px;
+	bottom:476px;
+	width:33px;
+	height:135px;
+	background:url(images/j-icon.png) no-repeat -367px 0px;
+}
+.questionnaire:hover{
+	background:url(images/j-icon.png) no-repeat -334px 0px;
+}
+.top{
+	width:1210px;
+	height:108px;
+	margin:auto;
+	
+}
+
+.jd-logo{
+	display:inline-block;
+	width:161px;
+	height:46px;
+	margin-top:23px;
+	background:url(images/j-icon.png) no-repeat 0 0;
+}
+.welcome{
+	height:108px;
+	text-align:center;
+	line-height:108px;
+	display:inline-block;
+	font-size:23px;
+	font-weight:bold;
+	margin-top:0px;
+	margin-left:30px;
+}
+.top-rf{
+	display:inline-block;
+	margin-top:57px;
+}
+.had{
+	color:#B8B8B8;
+}
+.ple-reg{
+	text-decoration:none;
+	color:#484848;
+}
+/*中间内容*/
+.content{
+	position:relative;
+	width:1210px;
+	height:623px;
+	margin:50px auto 60px;
+	
+}
+
+.content-lf{
+	width:505px;
+	height:623px;
+	padding-left:186px;
+}
+.content-rf{
+	width:518px;
+	height:602px;
+	border-left:1px solid #F2F2F2;
+	
+}
+.content-lf ul{
+	height:623px;
+}
+.content-lf ul li{
+	width:398px;
+	height:50px;
+	border:1px solid  #F2F2F2;
+	line-height:50px;
+	list-style:none;
+	margin-bottom:30px;
+	
+}
+.content-lf ul li>span{
+	padding-left:20px;
+	display:inline-block;
+	width:105px;
+}
+.content-lf ul li>input{
+	outline:medium;
+	border:transparent;
+}
+.content-lf ul .pho-verif_code{
+	margin-bottom:16px;
+}
+.content-lf ul .agree{
+	margin-bottom:16px;
+	border:transparent;
+}
+.content-lf ul .agree>input{
+	margin:0px;
+}
+.content-lf ul .agree>a{
+	text-decoration:none;
+	color:#3388FF;
+}
+.content-lf ul .quick-reg>a{
+	width:400px;
+	height:50px;
+	background-color:#EE2222;
+	color:#fff;
+	text-align:center;
+	text-decoration:none;
+	border:transparent;
+	display:inline-block;
+}
+ul .often-phonum .num-w .drop-down{
+	position:absolute;
+	top:22px;
+	left:93px;
+	right:23px;
+	bottom:23px;
+	width:11px;
+	height:10px;
+	background:url(images/j-icon.png) no-repeat -3px -158px;
+}
+ul.often-phonum .agree-pho{
+	border-left:1px solid #F2F2F2;
+}
+/*字体间距处理*/
+.content-lf ul li>.three-w{
+	letter-spacing:15px;
+}
+.content-lf ul li>.four-w{
+	letter-spacing:5px;
+}
+.content-lf ul li .num-w{
+	position:relative;
+	letter-spacing:3px;
+	width:104px;
+	display:inline-block;
+	border-right:1px solid #f2f2f2;
+}
+.content-lf ul li .mailbox{
+	margin-top:42px;
+	text-decoration:none;
+	font-size:12px;
+	height:12px;
+	color:#4997FF;
+}
+.content-lf ul li .enter{
+	width:80px;
+}
+.content-lf ul li .check{
+	width:109px; 
+	height:48px;
+	margin-top:1px;
+	margin-right:2px;
+	background:url(images/check.png) no-repeat 0 0;
+}
+.content-lf ul li .pho-enter{
+	width:110px;
+}
+.content-lf ul li .pho-check{
+	width:112px;
+	height:48px;
+	margin-top:2px;
+	margin-right:2px;
+	background:url(images/getcheck.png) no-repeat 0 0;
+}
+/*右边内容*/
+.content-rf .company,.foreign{
+	margin-left:120px;
+}
+.content-rf .company{
+	width:165px;
+	height:60px;
+	border-bottom:1px solid #f2f2f2;
+	display:inline-block;
+}
+.content-rf .company .com-logo{
+	width:30px;
+	height:30px;
+	background:url(images/j-icon.png) no-repeat 0 -50px;
+}
+.content-rf .company .cpy-con{
+	margin-left:20px;
+	line-height:30px;
+}
+.content-rf .foreign{
+	width:165px;
+	height:120px;
+}
+.content-rf .foreign .for-logo{
+	width:30px;
+	height:30px;
+	margin-top:35px;
+	background:url(images/j-icon.png) no-repeat -50px -50px;
+}
+.content-rf .foreign .for-con{
+	width:115px;
+	margin-left:13px;
+	margin-top:35px;
+	
+}
+.content-rf .note{
+	width:213px;
+	height:270px;
+	margin-left:90px;
+	background:url(images/phone.jpg) no-repeat 0 0;
+}
+/*底部*/
+.foot{
+	width:1210px;
+	height:117px;
+	margin:auto;
+	text-align:center;
+	border-top:1px solid  #F2F2F2;
+}
+.foot .foot-con{
+	margin-top:45px;
+}
+.foot .foot-con a{
+	text-decoration:none;
+	color:#A3A3A3;
+}

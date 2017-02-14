@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+ </head>
+ <body>
+	<!-- <input id="city"/>
+	<button id="check">查看城市</button> -->
+	<select id="pro">
+		<option>--请选择--</option>
+		<option>广东</option>
+		<option>广西</option>
+		<option>江西</option>
+	</select>
+	<select id="city">
+		<option>--请选择--</option>
+	</select>
+  <script>
+  var pro=["广东","广西"]
+  var cities=[
+	["广州","深圳","东莞"],
+	["南宁","桂林","玉林"]
+  ]
+  function $(id){
+	return document.getElementById(id);
+  }
+ /* $("check").onclick = function(){
+	var provi=$("city").value;
+	console.log(provi)
+	for(var i=0;i<pro.length;i++){
+		if(provi==pro[i]){
+			console.log(cities[i])
+		}else {
+			console.log("不在查找范围")
+		}
+	}
+  }*/
+  
+  $("pro").onchange=function(){
+		var provin=$("pro").value;
+		for(var i=0;i<pro.length;i++){
+			if(provin==pro[i]){
+				 console.log(cities[i]);
+				$("city").innerHTML="<option>--请选择--</option><option>"+cities[i].join("</option><option>")
+			}
+			
+		}
+  }
+  </script>
+ </body>
+</html>

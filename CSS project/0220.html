@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <style>
+	.head{
+		position:fixed;/*设置固定定位*/
+		left:50%;
+		right:50%;
+		top:50%;
+		bottom:50%;
+		width:0px;
+		height:0px;
+	}
+	.out{
+		width:800px;
+		height:60px;
+		border:1px solid black;
+		margin-top:-30px;/*上移一半*/
+		margin-left:-400px;/*下移一半*/
+		/* overflow:hidden; */
+	}
+	.in{
+		width:1550px;
+		height:60px;
+		border:1px solid black;
+		box-sizing:border-box;
+		padding:0px;
+	}
+	.show{
+		display:inline-block;
+		width:300px;
+		height:60px;
+	}
+	.red{
+		border:1px solid red;
+	}
+	.green{
+		border:1px solid green;
+	}
+	.blue{
+		border:1px solid blue;
+	}
+	.color4{
+		border:1px solid yellow;
+	}
+	.color5{
+		border:1px solid #333;
+	}
+  </style>
+ </head>
+ <body>
+ <div class="head">
+	  <div class="out">
+		<div class="in">
+			<div class="show red"></div>
+			<div class="show green"></div>
+			<div class="show blue"></div>
+			<div class="show color4"></div>
+			<div class="show color5"></div>
+		</div>
+  </div>
+  </div>
+ </body>
+</html>

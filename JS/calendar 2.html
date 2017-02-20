@@ -33,31 +33,29 @@
 		color:#766565;
 	}
 	.top {
-		height:17px;
+		height:25px;
 	}
 	.top .lf-tri{
-		border:5px solid transparent;
+		border:10px solid transparent;
 		border-right-color:black;
-		width:5px;
 		margin-top:4px;
 	}
 	.top .rf-tri{
-		border:5px solid transparent;
+		border:10px solid transparent;
 		border-left-color:black;
-		width:5px;
 		margin-top:4px;
 	}
 	.top .content{
-		width:178px;
+		width:185px;
 		height:5px;
 		text-align:center;
 	}
   </style>
  </head>
- <body>
+ <body onscroll='ttt()' onkeydown='keyd()'> 
 	<div class="top clear">
 		<div class="left lf-tri"></div>
-		<div class="left content">2017年2月</div>
+		<div class="left content">2017年2月1日</div>
 		<div class="left rf-tri"></div>
 	</div>
 	<div>
@@ -72,10 +70,10 @@
 				<li>六</li>
 			<ul>
 		</div>
-		<div id="date">
+		<div id="date" onclick='getDateNum(event)'>
 			<ul class="clear">
-				<li class="gray">30</li>
-				<li class="gray">31</li>
+				<li>30</li>
+				<li>31</li>
 				<li>1</li>
 				<li>2</li>
 				<li>3</li>
@@ -112,72 +110,94 @@
 			<ul class="clear">
 				<li>27</li>
 				<li>28</li>
-				<li class="gray">1</li>
-				<li class="gray">2</li>
-				<li class="gray">3</li>
-				<li class="gray">4</li>
-				<li class="gray">5</li>
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
 			</ul>
 			<ul class="clear">
 				<li>27</li>
 				<li>28</li>
-				<li class="gray">1</li>
-				<li class="gray">2</li>
-				<li class="gray">3</li>
-				<li class="gray">4</li>
-				<li class="gray">5</li>
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
 			</ul>
 		</div>
-	 </div>
+	<div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
   <script>
-
+	function keyd() {
+		console.log('key down')
+	}
+	function ttt() {
+		console.log('scroll')
+	}
+	function getDateNum(e)  {
+		console.log(e && e.target.nodeName)//获取发生事件的元素，在获取元素nodeName
+		if(e.target.nodeName=="LI"){//判断nodeName是LI才执行这个显示操作
+			change("content")[0].innerHTML = year+'年'+(month+1)+'月'+e.target.innerHTML+'日';
+		}
+	}
 	function $(id){
 		return document.getElementById(id);
 	}
+	function change(cls){
+		return document.getElementsByClassName(cls);
+	}
+	//获取年、月
+	var today = new Date();
+	var year=today.getFullYear(), month = today.getMonth();
+	var totalDay;
 
+	var uls=$("date").children;
+	
 	function loadCalendar(){
-		//获取年、月
-		var today = new Date();
-		var year=today.getFullYear(), month = today.getMonth();
 		//获取第一天是星期几
+		totalDay=getMonthDays(year,month+1);
 		var firstDay = (new Date(year,month,1)).getDay();
-
-
+		var lastMonthDay=getMonthDays(year,month);
 		//获取ul元素
-		var uls=$("date").children , num=1 ,totalDay;
+		 var num=1 ,preNum=1;//日期显示
 		/*for (var tt = 0;tt< uls.length ;tt++ )
 		{
 			console.log(uls[tt]);
 		}*/
 		//获取月份天数
-		totalDay=getMonthDays(year,month+1);
+		
 		// 类数组对象 转 数组
 		//uls = Array.prototype.slice.call(uls)
 		//获取li元素  填充
-		var list;
+		var lastDayCal=lastMonthDay-firstDay+1;//计算上个月在第一行显示的天数
 		for(var r=0;r<uls.length;r++){
 			list=uls[r].children;
 			for(var h=0;h<list.length;h++){
-				//在第一行 与第一天进行判断 等于第一天讲载入
+				//在第一行 与第一天进行判断 等于第一天时载入日期
 				if(r==0){
 					if(h>=firstDay){
-						//list[h].innerHTML=num++;
-						result=1;
+						list[h].innerHTML=num++;
+						list[h].setAttribute("class","");
+						//result=1;
 					}else {
-						//list[h].innerHTML="";
-						result=0;
+						list[h].innerHTML=lastDayCal++;//第一行上个月天数显示
+						list[h].setAttribute("class","gray");
+						//result=0;
 					}
 				}else {
 					//判断是否超出天数 ,不超出则继续加，超出则写空
 					if(num<=totalDay){
-						result=1;
-						//list[h].innerHTML=num++;
+						//result=1;
+						list[h].setAttribute("class","");
+						list[h].innerHTML=num++;
 					}else {
-						result=0;
-						//list[h].innerHTML="";
+						//result=0;
+						list[h].innerHTML=preNum++;//下个月天数显示
+						list[h].setAttribute("class","gray");
 					}
 				}
-				result? list[h].innerHTML=num++ : list[h].innerHTML="";
+				//result? list[h].innerHTML=num++ : list[h].innerHTML="";
 			}
 		}
 	}
@@ -198,7 +218,30 @@
 		}
 		return days;		
 	}
-	loadCalendar()
-	 </script>
+	loadCalendar();
+	//右击箭头月份增加
+	change("rf-tri")[0].onclick = function() {
+			month++;
+			if(month>11){
+				year+=1;
+				month=0;
+			}
+			change("content")[0].innerHTML=year+"年"+(month+1)+"月"+"1日";
+			//console.log(month+1);
+			loadCalendar();
+	}
+
+	change("lf-tri")[0].onclick =function() {
+			month--;
+			if(month<0){
+				month=11;
+				year-=1;
+			}
+			change("content")[0].innerHTML=year+"年"+(month+1)+"月"+"1日";
+			//console.log(month+1);
+			loadCalendar();
+	}
+	
+	</script>
  </body>
 </html>

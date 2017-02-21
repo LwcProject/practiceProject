@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <style>
+	.head{
+		position:fixed;/*设置固定定位*/
+		left:50%;
+		right:50%;
+		top:50%;
+		bottom:50%;
+		width:0px;
+		height:0px;
+	}
+	.out{
+		position: relative;
+		width:700px;
+		height:110px;
+		border:1px solid black;
+		margin-top:-55px;/*上移一半*/
+		margin-left:-350px;/*下移一半*/
+		overflow:hidden; 
+	}
+	.in{
+		position: absolute;
+		left: 0px;
+		top: 0px;
+		bottom: 0px;
+		width:1500px;
+		height:110px;
+		border:1px solid black;
+		box-sizing:border-box;
+		padding:0px;
+	}
+	.show{
+		display:inline-block;
+		width:300px;
+		height:100px;
+		background-color: #ccc;
+	}
+	img {
+		width: 300px;
+		height: 100px;
+	}
+	.red{
+		border:1px solid red;
+	}
+	.green{
+		border:1px solid green;
+	}
+	.blue{
+		border:1px solid blue;
+	}
+	.color4{
+		border:1px solid yellow;
+	}
+	.color5{
+		border:1px solid #333;
+	}
+  </style>
+ </head>
+ <body>
+<div class="head">
+ 	<div class="out">
+ 		<div class="in">
+ 			<img src='./img/1.jpg' />
+ 				<img src='./img/2.jpg' />
+ 				<img src='./img/3.jpg' />
+ 				<img src='./img/4.jpg' />
+ 		</div>
+ 	</div>
+ </div>
+<script>
+	var contain = document.getElementsByClassName('in')[0];
+	var out = document.getElementsByClassName('out')[0];
+	function animation() {
+		var left = parseInt(window.getComputedStyle(contain).left);//获取元素内部样式表的left值
+		console.log(left);
+		left += 2 ;//实现移动效果
+		contain.style.left = left + 'px';
+		times = setTimeout(animation,20);
+	}
+	
+	//setInterval(animation, 500)
+	var times;
+	out.onmouseover = function(){
+		//times = setInterval(animation, 25)
+		animation();
+	}
+	out.onmouseout = function(){	
+		clearTimeout(times);
+	}
+</script>
+ </body>
+</html>

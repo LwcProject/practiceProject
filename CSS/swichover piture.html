@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+ </head>
+ <body>
+	<img id="imgs" src="img/A.jpg"/><br>
+	<button id="change">切换</button>
+  <script>
+	function $(id){
+		return document.getElementById(id);
+	}
+	var c;
+	var pi=["img/A.jpg","img/B.jpg","img/icon.png"];
+	var i=0;
+	$("change").onclick = function() {
+	/*	c= c==true||undefined ? false:true;
+		$("imgs").src= c==true? "img/B.jpg":"img/A.jpg";*/
+		i= i==pi.length-1?0:++i;
+		console.log(i)
+		$("imgs").src=pi[i];
+			
+	}
+  </script>
+ </body>
+</html>

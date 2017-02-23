@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>image carousel</title>
+  <style>
+	.head{
+		position:fixed;
+		left:50%;
+		top:50%;
+		right:50%;
+		bottom:50%;
+		width:0px;
+		height:0px;
+	}
+	.out{
+		position:relative;
+		width:300px;
+		height:100px;
+		margin-top:-50px;
+		margin-left:-150px;
+		border:1px solid #666;
+		overflow:hidden;
+	}
+	.in{
+		position:absolute;
+		left:0px;
+		top:0px;
+		width:1500px;
+		height:100px;
+		border:1px solid #888;
+	}
+	.in img{
+		width:300px;
+		height:100px;
+	}
+  </style>
+ </head>
+ <body>
+	<div class="head">
+		<div class="out">
+			<div class="in">
+			</div>
+		</div>
+	</div>
+	<script>
+		function $(cla){
+			return document.getElementsByClassName(cla)
+		}
+		var imgs=['./img/1.jpg','./img/2.jpg','./img/3.jpg','./img/4.jpg'],
+			time,time2//定时器返回值
+			IMG_WIDTH=300;
+
+		//加载图片
+		function appendImg(){
+			var imgsFragment = document.createDocumentFragment();//创建文档片段，减少DOM操作
+			imgs.map(function(value,index){
+				var img = document.createElement("img")
+				img.src = value;
+				imgsFragment.appendChild(img);
+			})
+			$("in")[0].innerHTML="";//清空原有的元素
+			$("in")[0].appendChild(imgsFragment);
+		}
+		window.onload = function (){
+			appendImg();
+		}
+		//图片移动
+		function moving(){
+			var left = parseInt(window.getComputedStyle($("in")[0]).left);
+			if(left == 0){
+				var img = imgs.splice(1,imgs.length-1);//除第一张图片，剪切后面的图片
+				imgs = img.concat(imgs);
+				appendImg();//重新加载图片
+				left = -(IMG_WIDTH*(imgs.length-1))//反方向移动length-1张图的width
+				$("in")[0].style.left = left+"px"
+			}
+			left+=5;
+			$("in")[0].style.left = left+"px"
+			time = setTimeout(moving,40);
+		}
+		//用setInterval
+		/*$("out")[0].onmouseover = function(){
+			clearTimeout(time2);
+			clearTimeout(time);
+			time = setInterval(moving,50)
+		}
+		$("out")[0].onmouseout = function(){
+			time2 = setInterval(function (){
+				if(parseInt($("in")[0].style.left)%300 == 0){
+					clearTimeout(time)
+				}
+			},50)
+		}*/
+		//用setTimeout
+		function stopMove(){
+			if(parseInt($("in")[0].style.left)%300 == 0){
+				clearTimeout(time)
+			}
+			time2 = setTimeout(stopMove,40);
+		}
+		$("out")[0].onmouseover = function(){
+			clearTimeout(time);
+			clearTimeout(time2)
+			 moving();
+		}
+
+		$("out")[0].onmouseout = function(){
+			stopMove();
+		}
+	</script>
+ </body>
+</html>

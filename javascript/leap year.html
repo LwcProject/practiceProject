@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+ </head>
+ <body>
+  <!-- <input id="year"/>
+  <button id="check">是否闰年</button>-->
+  <input id="year"/>年
+  <input id="month"/>月
+  <input id="day"/>日
+  <button id="cal">计算是当年的第几天</button>
+  <script>
+	function $(id){
+		return document.getElementById(id);
+	}
+	/*闰年判断*/
+	/*$("check").onclick= function(){
+		var yr=parseInt($("year").value);
+		console.log(yr);
+		/*if((yr%4==0)&&(yr%100!=0)||(yr%400==0)){
+			console.log(yr+"年是闰年")
+		}else{
+			console.log(yr+"年是平年")
+		}*/
+	/*	var result;
+		(yr%4==0)&&(yr%100!=0)||yr%400==0?result="年是闰年":result="年是平年";
+		console.log(yr+result);
+	}*/
+	$("cal").onclick= function(){
+		var yr=parseInt($("year").value),
+			mth=parseInt($("month").value),
+			day=parseInt($("day").value),
+			date,speDate;
+		var arrDate=[];
+		(yr%4==0)&&(yr%100!=0)||yr%400==0?speDate=29:speDate=28;//闰年判断
+		/*方法一*/
+		/*if(mth==1){
+			date=day;
+		}else if(mth==2){
+			date=31+day;
+		}else if(mth==3){
+			date=31+speDate+day;
+		}else if(mth==4){
+			date=31+speDate+31+day;
+		}else if(mth==5){
+			date=31+speDate+31+30+day;
+		}else if(mth==6){
+			date=31+speDate+31+30+31+day;
+		}else if(mth==7){
+			date=31+speDate+31+30+31+30+day;
+		}else if(mth==8){
+			date=31+speDate+31+30+31+30+31+day;
+		}else if(mth==9){
+			date=31+speDate+31+30+31+30+31+31+day;
+		}else if(mth==10){
+			date=31+speDate+31+30+31+30+31+31+30+day;
+		}else if(mth==11){
+			date=31+speDate+31+30+31+30+31+31+30+31+day;
+		}else if(mth==12){
+			date=31+speDate+31+30+31+30+31+31+30+31+30+day;
+		}*/
+		/*方法二*/
+		date=day;//赋初值
+		arrDate=[31,speDate,31,30,31,30,31,31,30,31,30,31];//月份天数
+		for(var i=0;i<mth-1;i++){
+			date+=arrDate[i];
+		}
+		console.log("是一年中的第"+date+"天");
+	}
+		
+  </script>
+ </body>
+</html>

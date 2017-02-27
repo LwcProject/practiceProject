@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style media="screen">
+    #slider {
+      position: relative;
+      margin: 50px auto;
+      width: 300px;
+      height: 200px;
+      border: 1px solid #ccc;
+      overflow: hidden;
+    }
+
+    .container {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      bottom: 0px;
+    }
+
+    .container img {
+      width: 300px;
+      height: 200px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id='slider'>
+    <!-- <div class="container">
+
+    </div> -->
+  </div>
+  <script type="text/javascript">
+    var images = [
+      "./img/1.jpg",
+      "./img/2.jpg",
+      "./img/3.jpg",
+      "./img/4.jpg",
+    ]
+
+    function $(cla) {
+      return document.getElementsByClassName(cla);
+    }
+
+    function I(id) {
+      return document.getElementById(id);
+    }
+    var IMG_WIDTH, IMG_HEIGHT, aniTatalTime = 500,
+      UNIT_LENG, UNIT_TIME,
+      step = 50,
+      calStep = 0,
+      time, canPlay = true;
+
+    function imgInt() {
+      //获取图片的宽高
+      IMG_WIDTH = parseInt(getComputedStyle(I("slider")).width);
+      IMG_HEIGHT = parseInt(getComputedStyle(I("slider")).height);
+      //获取容器元素图片的宽高度
+      $("container")[0].style.width = IMG_WIDTH * images.length + "px";
+      $("container")[0].style.height = IMG_HEIGHT + "px";
+
+      updateImg();
+      //计算一张图移动的总时间，单位时间和单位距离
+      UNIT_LENG = IMG_WIDTH / step; //每次移动的距离：一张图片除以总步数
+      UNIT_TIME = aniTatalTime / step; //移动一步的时间：一张图移动的时间除以步数
+
+      imgMoving();
+      // autoPlay();
+    }
+    //装载图片元素
+    function updateImg() {
+      $("container")[0].innerHTML = "";
+      var eleFragment = document.createDocumentFragment();
+      images.map(function(src) {
+        var img = document.createElement("img")
+        img.src = src;
+        eleFragment.appendChild(img);
+      })
+      $("container")[0].appendChild(eleFragment);
+    }
+    //图片移动
+    function imgMoving() {
+      var left = parseInt(getComputedStyle($("container")[0]).left);
+      left = left - UNIT_LENG + "px"
+      $("container")[0].style.left = left;
+      calStep++;
+      if (calStep < step) {
+        //  clearTimeout(time);
+        time = setTimeout(imgMoving, UNIT_TIME);
+      } else {
+        calStep = 0;
+        $("container")[0].style.left = "0px"
+        var img = images.splice(0, 1)
+        images = images.concat(img);
+        updateImg();
+        autoPlay();
+      }
+    }
+    imgInt();
+
+    function autoPlay() {
+      if (canPlay) { //悬停在外面可以移动
+        //clearTimeout(time);
+        time = setTimeout(imgMoving, 2000)
+      } else { //进入视窗区域就停止
+        clearTimeout(time);
+        setTimeout(autoPlay, UNIT_TIME)
+      }
+    }
+
+    I("slider").onmouseover = function() {
+      canPlay = false;
+    }
+    I("slider").onmouseout = function() {
+      canPlay = true;
+    }
+  </script>
+</body>
+
+</html>

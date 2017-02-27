@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <h1>在循环中创建闭包</h1>
+  <p id="help">Helpful notes will appear here</p>
+  <p>E-mail: <input type="text" id="email" name="email"></p>
+  <p>Name: <input type="text" id="name" name="name"></p>
+  <p>Age: <input type="text" id="age" name="age"></p>
+  <script type="text/javascript">
+    function showHelp(help) {
+      document.getElementById('help').innerHTML = help;
+    }
+    //使onfocus指向一个新的闭包对象。
+    function makeHelpCallback(help) {
+      return function() {
+        showHelp(help);
+      }
+    }
+
+
+    function setupHelp() {
+      var helpText = [{
+          'id': 'email',
+          'help': 'Your e-mail address'
+        },
+        {
+          'id': 'name',
+          'help': 'Your full name'
+        },
+        {
+          'id': 'age',
+          'help': 'Your age(you must be over 16)'
+        }
+      ];
+      for (var i = 0; i < helpText.length; i++) {
+        var item = helpText[i];
+        document.getElementById(item.id).onfocus = makeHelpCallback(item.help);
+      }
+    }
+    setupHelp();
+  </script>
+</body>
+
+</html>

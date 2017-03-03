@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+<style media="screen">
+  .bar {
+    position: relative;
+    width: 300px;
+    height: 20px;
+    border-radius: 20px;
+    border: 5px solid black;
+    margin: auto;
+    overflow: hidden;
+  }
+
+  .percent {
+    position: absolute;
+    left: 125px;
+    width: 50px;
+    height: 20px;
+    text-align: center;
+    background-color: transparent;
+    margin: auto;
+    z-index: 3;
+    color: red;
+  }
+
+  .stream {
+    width: 400px;
+    height: 20px;
+    background-color: red;
+    z-index: 2;
+  }
+</style>
+
+<body>
+  <div class="bar">
+    <div class="percent">11</div>
+  </div>
+
+  <script type="text/javascript">
+    var go = document.createElement("div");
+    go.setAttribute("class", "stream");
+    go.style.position = "absolute";
+    go.style.left = "-400px";
+    go.style.right = "0px";
+    go.style.top = "0px";
+    document.getElementsByClassName("bar")[0].appendChild(go);
+    var stream = document.getElementsByClassName("percent")[0];
+
+    function come() {
+      var left = parseInt(go.style.left);
+      var perct, slowTime = 200;
+      left += 5;
+      if (left >= -95) {
+        left = -400;
+      }
+      perct = (left + 400) * 100 / 300; //计算百分比
+      go.style.left = left + "px";
+      stream.innerHTML = parseInt(perct) + "%";
+      if (perct > 85) {
+        slowTime = 500;
+        go.style.backgroundColor = "#0CD5DB";
+      } else if (perct > 40) {
+        slowTime = 200;
+        go.style.backgroundColor = "#4BE52E"; //变色
+      } else {
+        slowTime = 150;
+        go.style.backgroundColor = "red";
+      }
+      setTimeout(come, slowTime);
+    }
+    come();
+  </script>
+</body>
+
+</html>

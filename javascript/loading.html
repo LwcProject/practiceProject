@@ -25,6 +25,7 @@
     background-color: transparent;
     margin: auto;
     z-index: 3;
+    /*层叠在进度条上方 显示百分比*/
     color: red;
   }
 
@@ -53,25 +54,29 @@
 
     function come() {
       var left = parseInt(go.style.left);
-      var perct, slowTime = 200;
+      var perct, maxTime = 200,
+        minTime;
       left += 5;
       if (left >= -95) {
         left = -400;
       }
-      perct = (left + 400) * 100 / 300; //计算百分比
+      perct = (left + 400) / 300 * 100; //计算百分比
       go.style.left = left + "px";
       stream.innerHTML = parseInt(perct) + "%";
       if (perct > 85) {
-        slowTime = 500;
+        minTime = 1000;
+        maxTime = 1500;
         go.style.backgroundColor = "#0CD5DB";
       } else if (perct > 40) {
-        slowTime = 200;
+        minTime = 500;
+        maxTime = 1000;
         go.style.backgroundColor = "#4BE52E"; //变色
       } else {
-        slowTime = 150;
+        minTime = 0;
+        maxTime = 500;
         go.style.backgroundColor = "red";
       }
-      setTimeout(come, slowTime);
+      setTimeout(come, Math.random() * (maxTime - minTime + 1) + minTime);
     }
     come();
   </script>

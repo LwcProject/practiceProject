@@ -11,17 +11,21 @@
   <div id="game">
   </div>
   <div class="head clear">
-    <span class="left">Score:</span>
-    <span id="score" class="left"></span>
-    <div class="selction right">
-      <a href="" class="model " onclick="gameStart()">3X3</a>
-      <a href="" class="model " onclick="gameStart()">4X4</a>
-      <a href="" class="model " onclick="gameStart()">5X5</a>
-      <a href="" class="model " onclick="gameStart()">6X6</a>
+    <div class="scoreShow left">
+      <span>Score:</span>
+      <span id="score"></span>
+    </div>
+    <div class="selction right" onclick="getModel(event)">
+      <a href="#" class="model" value="3">3X3</a>
+      <a href="#" class="model" value="4">4X4</a>
+      <a href="#" class="model" type="button">5X5</a>
+      <a href="#" class="model" type="button">6X6</a>
+      <!-- <input type="text" id="model"> -->
+      <!-- <button type="button" name="button" id="set">设置游戏</button> -->
     </div>
   </div>
   <div id="gridPanel">
-    <div id="g00" class="grid"></div>
+    <!-- <div id="g00" class="grid"></div>
     <div id="g01" class="grid"></div>
     <div id="g02" class="grid"></div>
     <div id="g03" class="grid"></div>
@@ -39,9 +43,9 @@
     <div id="g30" class="grid"></div>
     <div id="g31" class="grid"></div>
     <div id="g32" class="grid"></div>
-    <div id="g33" class="grid"></div>
+    <div id="g33" class="grid"></div> -->
 
-    <div id="c00" class="cell"></div>
+    <!-- <div id="c00" class="cell"></div>
     <div id="c01" class="cell"></div>
     <div id="c02" class="cell"></div>
     <div id="c03" class="cell"></div>
@@ -59,7 +63,7 @@
     <div id="c30" class="cell"></div>
     <div id="c31" class="cell"></div>
     <div id="c32" class="cell"></div>
-    <div id="c33" class="cell"></div>
+    <div id="c33" class="cell"></div> -->
   </div>
   <div id="gameover">
     <h1 id="Score"></h1>

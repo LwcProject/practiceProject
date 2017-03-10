@@ -1,19 +1,22 @@
-var arr = [
-  [0, 0, 0, 0],
-  [0, 0, 0, 0],
-  [0, 0, 0, 0],
-  [0, 0, 0, 0]
-];
+var arr = [];
 
 function $(id) {
   return document.getElementById(id);
 }
+
+function C(cls) {
+  return document.getElementsByClassName(cls);
+}
 var obj = {
+  ROW: 4,
+  CELL: 4,
   r: 0,
   c: 0,
   f: 0, //r行  c列  f查找的下一位置
   keyCd: 0,
   score: 0,
+  createEle: 0,
+  eleFragment: "",
   //游戏开始
   gameStart: function() {
     obj.init();
@@ -40,12 +43,23 @@ var obj = {
     }
 
   },
+
   //初始化
   init: function() {
-    for (r = 0; r < arr.length; r++) {
-      for (c = 0; c < arr[r].length; c++) {
+    obj.eleFragment = document.createDocumentFragment();
+    for (r = 0; r < obj.ROW; r++) {
+      arr.push([]);
+      for (c = 0; c < obj.CELL; c++) {
         arr[r][c] = 0;
+        if (obj.createEle == 1) {
+          obj.create(r, c);
+        }
       }
+    }
+    if (obj.createEle == 1) {
+      obj.createEle = 0;
+      $("gridPanel").innerHTML = ""; //清空原有的元素
+      $("gridPanel").appendChild(obj.eleFragment); //再添加
     }
     obj.score = 0;
     $("score").innerHTML = obj.score;
@@ -55,11 +69,63 @@ var obj = {
     obj.random();
     obj.updateView();
   },
+  //创建div元素，添加到gridPanel中
+  create: function(r, c) {
+    var grid, cell;
+    grid = document.createElement("div");
+    cell = document.createElement("div");
+    grid.id = "g" + r + c;
+    grid.className = "grid";
+    cell.id = "c" + r + c;
+    cell.className = "cell";
+
+    if (obj.ROW == 3) {
+      grid.style.width = "140px";
+      grid.style.height = "140px";
+      grid.style.margin = "15px 0 0 15px";
+      cell.style.width = "140px";
+      cell.style.height = "140px";
+      cell.style.top = 15 + r * 155 + "px"; //设置距离上一位置的高度
+      cell.style.left = 15 + c * 155 + "px"; //设置离左一位置的距离
+      cell.style.lineHeight = "140px";
+    } else if (obj.ROW == 4) {
+      grid.style.width = "100px";
+      grid.style.height = "100px";
+      grid.style.margin = "16px 0 0 16px";
+      cell.style.width = "100px";
+      cell.style.height = "100px";
+      cell.style.top = 16 + r * 116 + "px";
+      cell.style.left = 16 + c * 116 + "px";
+      cell.style.lineHeight = "100px";
+    } else if (obj.ROW == 5) {
+      grid.style.width = "75px";
+      grid.style.height = "75px";
+      grid.style.margin = "17.5px 0 0 17.5px";
+      cell.style.width = "75px";
+      cell.style.height = "75px";
+      cell.style.top = 17.5 + r * 92.5 + "px";
+      cell.style.left = 17.5 + c * 92.5 + "px";
+      cell.style.fontSize = "40px";
+      cell.style.lineHeight = "75px";
+    } else if (obj.ROW == 6) {
+      grid.style.width = "66px";
+      grid.style.height = "66px";
+      grid.style.margin = "12px 0 0 12px";
+      cell.style.width = "66px";
+      cell.style.height = "66px";
+      cell.style.top = 12 + r * 78 + "px";
+      cell.style.left = 12 + c * 78 + "px";
+      cell.style.fontSize = "30px";
+      cell.style.lineHeight = "66px";
+    }
+    obj.eleFragment.appendChild(grid);
+    obj.eleFragment.appendChild(cell);
+  },
   //随机产生一个新的数
   random: function() {
     while (1) {
-      var row = Math.floor(Math.random() * 4);
-      var cell = Math.floor(Math.random() * 4);
+      var row = Math.floor(Math.random() * obj.ROW);
+      var cell = Math.floor(Math.random() * obj.CELL);
       if (arr[row][cell] == 0) { //判断生成的随机数位置为0才随机生成2或4
         arr[row][cell] = (Math.random() > 0.5) ? 4 : 2;
         break;
@@ -75,21 +141,31 @@ var obj = {
   },
   //更新页面
   updateView: function() {
-    for (r = 0; r < arr.length; r++) {
-      for (c = 0; c < arr[r].length; c++) {
+    var win = 0;
+    for (r = 0; r < obj.ROW; r++) {
+      for (c = 0; c < obj.CELL; c++) {
         if (arr[r][c] == 0) { //值为0的不显示
           $("c" + r + c).innerHTML = ""; //0不显示
           $("c" + r + c).className = "cell" //清除样式
         } else {
           $("c" + r + c).innerHTML = arr[r][c];
           $("c" + r + c).className = "cell n" + arr[r][c]; //添加不同数字的颜色
-          if (arr[r][c] == 2048) { //玩家win
-            $("game").style.display = "block";
-            $("gameover").style.display = "block";
-            $("Score").innerHTML = "You win!<br>Score:" + obj.score;
+          if (obj.ROW == 3 && arr[r][c] == 1024) {
+            win = 1;
+          } else if (obj.ROW == 4 && arr[r][c] == 2048) {
+            win = 1;
+          } else if (obj.ROW == 5 && arr[r][c] == 4096) {
+            win = 1;
+          } else if (obj.ROW == 6 && arr[r][c] == 8192) {
+            win = 1;
           }
         }
       }
+    }
+    if (win == 1) { //通关
+      $("game").style.display = "block";
+      $("gameover").style.display = "block";
+      $("Score").innerHTML = "You win!<br>Score:" + obj.score;
     }
     if (obj.isGameOver()) {
       $("game").style.display = "block";
@@ -100,13 +176,13 @@ var obj = {
   },
   //游戏结束
   isGameOver: function() {
-    for (r = 0; r < arr.length; r++) {
-      for (c = 0; c < arr[r].length; c++) {
+    for (r = 0; r < obj.ROW; r++) {
+      for (c = 0; c < obj.CELL; c++) {
         if (arr[r][c] == 0) { //有0还不是gameover
           return false;
-        } else if (c != arr[r].length - 1 && arr[r][c] == arr[r][c + 1]) { //左往右  前一个和下一个不相等
+        } else if (c != obj.CELL - 1 && arr[r][c] == arr[r][c + 1]) { //左往右  前一个和下一个不相等
           return false;
-        } else if (r != arr.length - 1 && arr[r][c] == arr[r + 1][c]) { //上往下 上一个和下一个不相等
+        } else if (r != obj.ROW - 1 && arr[r][c] == arr[r + 1][c]) { //上往下 上一个和下一个不相等
           return false;
         }
       }
@@ -150,8 +226,8 @@ var obj = {
   //左按键的处理
   dealToLeft: function(r) {
     var next;
-    for (c = 0; c < arr[r].length; c++) {
-      next = obj.find(r, c, c + 1, arr[r].length, 1); //找出第一个不为0的位置
+    for (c = 0; c < obj.ROW; c++) {
+      next = obj.find(r, c, c + 1, obj.CELL, 1); //找出第一个不为0的位置
       if (next == -1) break; //没有找到就返回
       //如果当前位置为0
       if (arr[r][c] == 0) {
@@ -170,7 +246,7 @@ var obj = {
     var before, //没处理前
       after; //after处理后   nextc 清零的位置
     before = arr.toString();
-    for (r = 0; r < arr.length; r++) {
+    for (r = 0; r < obj.ROW; r++) {
       obj.dealToLeft(r);
     }
     after = arr.toString();
@@ -190,7 +266,7 @@ var obj = {
   //右按键处理
   dealToRight: function(r) {
     var next;
-    for (c = arr[r].length - 1; c >= 0; c--) {
+    for (c = obj.CELL - 1; c >= 0; c--) {
       next = obj.find(r, c, c - 1, 0, -1); //找出第一个不为0的位置
       if (next == -1) break; //没有找到就返回
       //如果当前位置为0
@@ -209,7 +285,7 @@ var obj = {
     var before, //没处理前
       after; //after处理后   nextc 清零的位置
     before = arr.toString();
-    for (r = 0; r < arr.length; r++) {
+    for (r = 0; r < obj.ROW; r++) {
       obj.dealToRight(r);
     }
     after = arr.toString();
@@ -221,8 +297,8 @@ var obj = {
   //上按键处理
   dealToUp: function(c) {
     var next;
-    for (r = 0; r < arr.length; r++) {
-      next = obj.find(r, c, r + 1, arr.length, 1); //找出第一个不为0的位置
+    for (r = 0; r < obj.ROW; r++) {
+      next = obj.find(r, c, r + 1, obj.ROW, 1); //找出第一个不为0的位置
       if (next == -1) break;
       //如果当前位置为0
       if (arr[r][c] == 0) {
@@ -241,7 +317,7 @@ var obj = {
       after; //after处理后   nextc 清零的位置
     before = arr.toString();
     r = 0;
-    for (c = 0; c < arr[r].length; c++) {
+    for (c = 0; c < obj.CELL; c++) {
       obj.dealToUp(c);
     }
     after = arr.toString();
@@ -253,7 +329,7 @@ var obj = {
   //下按键处理
   dealToDown: function(c) {
     var next;
-    for (r = arr.length - 1; r >= 0; r--) {
+    for (r = obj.ROW - 1; r >= 0; r--) {
       next = obj.find(r, c, r - 1, 0, -1); //找出第一个不为0的位置
       if (next == -1) {
         break;
@@ -274,7 +350,7 @@ var obj = {
     var before, //没处理前
       after; //after处理后   nextc 清零的位置
     before = arr.toString();
-    for (c = 0; c < arr[0].length; c++) {
+    for (c = 0; c < obj.CELL; c++) {
       obj.dealToDown(c);
     }
     after = arr.toString();
@@ -285,5 +361,38 @@ var obj = {
   }
 }
 window.onload = function() {
+  obj.createEle = 1;
   obj.gameStart();
 }
+
+function getModel(e) { //事件冒泡获取a元素
+  var a = e.target,
+    modelValue = 4;
+  if (a.nodeName == "A") {
+    if (a.innerHTML == "3X3") {
+      modelValue = 3;
+    } else if (a.innerHTML == "4X4") {
+      modelValue = 4;
+    } else if (a.innerHTML == "5X5") {
+      modelValue = 5;
+    } else if (a.innerHTML == "6X6") {
+      modelValue = 6;
+    }
+    obj.ROW = obj.CELL = modelValue;
+    obj.createEle = 1;
+    obj.gameStart();
+  }
+}
+
+
+//   var modelValue = parseInt($("model").value);
+//   if (isNaN(modelValue)) {
+//     modelValue = 4; //默认是4*4
+//   }
+//   if (modelValue <= 2 || modelValue > 6) return; //2格或者大于6格无效
+//   obj.ROW = modelValue;
+//   obj.CELL = modelValue;
+//   obj.createEle = 1;
+//   obj.gameStart();
+//   console.log(modelValue);
+// }

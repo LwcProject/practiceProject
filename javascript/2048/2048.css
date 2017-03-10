@@ -20,17 +20,24 @@
 .right{
 	float: right;
 }
+.scoreShow{
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+}
 .model{
-	background-color: #CCC0B3;
-	color: white;
 	text-decoration: none;
-	border-radius: 5px;
+	color: white;
+	background-color: #bbada0;
+	font-size: 36px;
+	border-radius: 10px;
 }
 .head{
-	width:550px;
+	width:480px;
 	height: 50px;
 	margin:0 auto;
-	font-size: 36px;
+	font-size: 25px;
+
 }
 #gridPanel{
 	width:480px; height:480px;
@@ -52,7 +59,7 @@
 	color:#fff;
 }
 
-#c00,#c01,#c02,#c03{top:16px;}
+/*#c00,#c01,#c02,#c03{top:16px;}
 #c10,#c11,#c12,#c13{top:132px;}
 #c20,#c21,#c22,#c23{top:248px;}
 #c30,#c31,#c32,#c33{top:364px;}
@@ -60,7 +67,7 @@
 #c00,#c10,#c20,#c30{left:16px;}
 #c01,#c11,#c21,#c31{left:132px;}
 #c02,#c12,#c22,#c32{left:248px;}
-#c03,#c13,#c23,#c33{left:364px;}
+#c03,#c13,#c23,#c33{left:364px;}*/
 
 .n2{background-color:#eee3da}
 .n4{background-color:#ede0c8}

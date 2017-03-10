@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+<style media="screen">
+  .black {
+    width: 50px;
+    height: 50px;
+    background-color: black;
+    display: inline-block;
+  }
+
+  .white {
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    display: inline-block;
+  }
+
+  #out {
+    height: 400px;
+    width: 400px;
+  }
+</style>
+
+<body>
+  <div id="out">
+
+  </div>
+  <script type="text/javascript">
+    function create() {
+      return document.createElement("div");
+    }
+    (function() {
+      var black, white, total, eleFragment = document.createDocumentFragment();
+      for (var i = 1,
+          s = 0; i < 9; i++) {
+        for (var j = 1; j < 9; j++) {
+          if ((i + j) % 2 == 0) {
+            black = create(); //创建元素
+            black.setAttribute("class", "black"); //设置class
+            total = black;
+          } else {
+            white = create();
+            white.setAttribute("class", "white");
+            total = white;
+          }
+          eleFragment.appendChild(total); //创建的元素加入文档片段
+        }
+      }
+      document.getElementById("out").appendChild(eleFragment);
+    }())
+  </script>
+</body>
+
+</html>

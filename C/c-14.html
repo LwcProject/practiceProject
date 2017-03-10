@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+<!-- <input type="text" id="enter" />
+<button type="button" name="button" id="cal">分解质因数</button> -->
+<input type="text" id="a" placeholder="请输入数字" />
+<input type="text" id="n" placeholder="几个数相加" />
+<button type="button" name="button" id="result">计算结果</button>
+
+<body>
+  <script type="text/javascript">
+    function $(id) {
+      return document.getElementById(id);
+    }
+    // var temp;
+    // $("cal").onclick = function() {
+    //   temp = parseInt($("enter").value);
+    //   for (var i = 2; i < temp; i++) {
+    //     while (temp != i) {
+    //       if (temp % i == 0) {
+    //         console.log(i + "*");
+    //         temp = temp / i;
+    //       } else {
+    //         break;
+    //       }
+    //     }
+    //   }
+    //   console.log(temp);
+    // }
+    $("result").onclick = function() {
+      var a = parseInt($("a").value);
+      var n = parseInt($("n").value);
+      var tn = 0,
+        sum = 0;
+      for (var i = 1; i <= n; i++) {
+        tn += a;
+        sum += tn;
+        a *= 10;
+      }
+      console.log(sum);
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <input type="text" id="month" />
+  <button type="button" id="cal">总数</button>
+  <script type="text/javascript">
+    var f1 = f2 = 1;
+    document.getElementById("cal").onclick = function() {
+      var month = parseInt(document.getElementById("month").value);
+      var total = 1,
+        s1 = 1,
+        s2 = 1;
+      // for (var i = 0; i < month; i++) {
+      //   console.log(f1, f2);
+      //   f1 = f1 + f2;
+      //   f2 = f1 + f2;
+      // }
+
+      for (var j = 3; j <= month; j++) {
+        total = s1 + s2;
+        s1 = s2;
+        s2 = total;
+      }
+      console.log(total);
+    }
+  </script>
+</body>
+
+</html>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <script type="text/javascript">
+    // var x, y, z;
+    // x = parseInt(window.prompt("x"));
+    // y = parseInt(window.prompt("y"));
+    // z = parseInt(window.prompt("z"));
+    // //先判断xy 如果x>y则交换xy，，再用x与z比较
+    // //求出最小值x
+    // //y与z比较求出最大值
+    // if (x > y) {
+    //   x += y; //计算总值
+    //   y = x - y; //把x交换到y
+    //   x -= y;
+    // }
+    // if (x > z) { //求三个数中的最小值
+    //   x += z;
+    //   z = x - z;
+    //   x -= z;
+    // }
+    // if (y > z) {
+    //   y += z;
+    //   z = y - z;
+    //   y -= z;
+    // }
+    // console.log(x, y, z);
+    var a = 1;
+
+    function t() {
+      //  return 5; //大于1是true
+      return 0; //false if条件结果false
+      //  return; //没有返回值，if条件结果false
+      //  console.log(666); //if条件结果false
+    }
+    if (a >= 1 && t) {
+      console.log((a >= 1 && t()));
+    } else {
+      console.log(88888);
+    }
+  </script>
+</body>
+
+</html>

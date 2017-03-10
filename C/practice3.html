@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+<button type="button" class="cal">计算发放的奖金</button>
+<input type="text" class="prof" placeholder="万元"><br><br>
+<span>计算结果</span>
+<input type="text" class="show">
+
+<body>
+  <script type="text/javascript">
+    function $(cls) {
+      return document.getElementsByClassName(cls);
+    }
+    $("cal")[0].onclick = function() {
+      var profit = parseInt($("prof")[0].value); //获取利润
+      console.log(profit);
+      var bonus = 0;
+      if (profit > 100) {
+        bonus += (profit - 100) * 0.001;
+        profit = 100;
+      }
+      if (profit > 60) {
+        bonus += (profit - 60) * 0.0015;
+        profit = 60;
+      }
+      if (profit > 40) {
+        bonus += (profit - 40) * 0.003;
+        profit = 40;
+      }
+      if (profit > 20) {
+        bonus += (profit - 20) * 0.005;
+        profit = 20;
+      }
+      if (profit > 10) {
+        bonus += (profit - 10) * 0.0075;
+        profit = 10;
+      }
+      if (profit <= 10) {
+        bonus += profit * 0.1;
+      }
+
+      console.log(bonus);
+      $("show")[0].value = bonus + "万元";
+    }
+  </script>
+</body>
+
+</html>

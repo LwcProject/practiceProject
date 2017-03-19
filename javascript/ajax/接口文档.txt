@@ -1,0 +1,10 @@
+1.用户登录接口
+http://localhost:8081/home/login
+
+参数：
+{
+  uname: '', // string
+  pwd: '' // string
+}
+
+请方法：post

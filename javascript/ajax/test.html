@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <input type="text" name="" value="" id="alter">
+  <button type="button" name="button" id="get">发送请求</button>
+  <h1>请求结果是：</h1>
+  <div id='myDiv'></div>
+  <script type="text/javascript">
+    function $(seclector) {
+      return document.querySelectorAll(seclector);
+    }
+    var alter = $("#alter")[0];
+
+    $("#get")[0].onclick = function() {
+      if (alter.value == "") {
+        return
+      };
+
+      var xmlhttp;
+      if (window.XMLHttpRequest) {
+        //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+        xmlhttp = new XMLHttpRequest();
+      } else {
+        // IE6, IE5 浏览器执行代码
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+          // 字符串 转 对象
+          var req = eval('(' + xmlhttp.response + ')');
+          console.log(req)
+          // 页面打印
+          document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
+        }
+      }
+      // 更改Allice 响应的结果也会跟着变 试试 把Allice 改为其他名字，或者其他字符串 看看结果
+      xmlhttp.open("GET", "http://localhost:8081/home/login" + alter.value, true);
+      xmlhttp.send();
+    }
+
+    // 试试，做一个input 用于写入名字，一个button 作为请求按钮，更改input 点击请求，更新请求结果内容
+  </script>
+</body>
+
+</html>
+
+</html>

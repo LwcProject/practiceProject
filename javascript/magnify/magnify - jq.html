@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="jquery-1.11.3.js"></script>
+  <style media="screen">
+    body {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .show {
+      position: relative;
+      width: 450px;
+      height: 450px;
+      border: 1px solid #888;
+    }
+
+    #mask {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      right: 0px;
+      bottom: 0px;
+      z-index: 5;
+      cursor: all-scroll;
+    }
+    /*镜片*/
+
+    .mirror {
+      display: none;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      right: 0px;
+      width: 281.25px;
+      height: 281.25px;
+      background-color: rgba(235, 235, 30, 0.5);
+      z-index: 2;
+    }
+    /*大图显示框*/
+
+    .box {
+      display: none;
+      position: absolute;
+      left: 550px;
+      top: 0px;
+      width: 500px;
+      height: 500px;
+      overflow: hidden;
+      border: 1px solid #888;
+    }
+
+    .big {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+    }
+
+    .clear:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    .left {
+      float: left;
+    }
+
+    .right {
+      float: right;
+    }
+
+    .list {
+      width: 450px;
+      height: 80px;
+      line-height: 80px;
+    }
+
+    .leBtn>img {
+      margin-top: 23.5px;
+    }
+
+    .rigBtn>img {
+      margin-top: 23.5px;
+    }
+
+    .picture {
+      width: 54px;
+      height: 54px;
+      border: 2px solid transparent;
+    }
+
+    .picture:hover {
+      border-color: red;
+    }
+
+    .picts {
+      height: 58px;
+      margin-top: 11px;
+      margin-left: 40px;
+      margin-right: 40px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="clear" style="margin-left:100px">
+    <div class="show left">
+      <div id="mask"></div>
+      <span class="mirror"></span>
+      <img src="https://img14.360buyimg.com/n1/s450x450_jfs/t4042/336/485174131/112786/cbfa499e/5851f4ecN397534ba.jpg" class="image">
+    </div>
+    <div class="box ">
+      <img src="https://img14.360buyimg.com//n0/jfs/t4042/336/485174131/112786/cbfa499e/5851f4ecN397534ba.jpg" class="big" alt="">
+    </div>
+    <div class="list clear">
+      <div class="leBtn left">
+        <img src="img/left.png" alt="">
+      </div>
+      <div class="left picts">
+        <img class="picture" src="img/1.jpg" alt="">
+        <img class="picture" src="img/2.jpg" alt="">
+        <img class="picture" src="img/3.jpg" alt="">
+        <img class="picture" src="img/4.jpg" alt="">
+        <img class="picture" src="img/5.jpg" alt="">
+      </div>
+      <div class="rigBtn right">
+        <img src="img/rig.png" alt="">
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    var m = $(".mirror");
+    var mWidth = parseInt($(m).css("width"));
+    $("#mask").mousemove(function(e) {
+
+      var x = e.offsetX;
+      var y = e.offsetY;
+      //  console.log("x: " + x, "y: " + y);
+      //向左移动，如果坐标小于镜片的一半，则镜片不再移动 防止镜片移出中图外面  即左边最小只能到0
+      x < mWidth / 2 && (x = mWidth / 2);
+      //向右移动如果大于中图减去镜片的一半，镜片就不再移动   即右边最大到中图width 减去一个镜片的width
+      (x > (450 - mWidth / 2)) && (x = (450 - mWidth / 2));
+      //上下处理原理同 左右移动
+      y < mWidth / 2 && (y = mWidth / 2);
+      (y > (450 - mWidth / 2)) && (y = (450 - mWidth / 2));
+      //移动镜片
+      //y-mWidht/2  鼠标居中显示
+      $(m).css("top", (y - mWidth / 2) + "px");
+      $(m).css("left", (x - mWidth / 2) + "px");
+
+      //放大镜效果  关键是倍数计算
+      //***1*** 先确定大图显示框的大小 假如450px，   大图width/大图显示框width = 中图width/镜片的width比例要相等  800/500=450/281.25
+      //***2**** 然后  (大图显示的width /中图镜片的width) 结果就是倍数   500/281.25=1.78
+      $(".big").css("top", -((y - mWidth / 2) * 1.78) + "px"); //大图向反向移动
+      $(".big").css("left", -((x - mWidth / 2) * 1.78) + "px"); //大图向反向移动
+    })
+
+    $("#mask").mouseover(function() {
+      $(".box").css("display") == "block" ? ($(m).css("display", "none"), $(".box").css("display", "none")) :
+        ($(m).css("display", "block"), $(".box").css("display", "block "));
+    });
+    $("#mask").mouseout(function() {
+      $(".box").css("display") == "block" ? ($(m).css("display", "none"), $(".box").css("display", "none")) :
+        ($(m).css("display", "block"), $(".box").css("display", "block "));
+    })
+  </script>
+</body>
+
+</html>

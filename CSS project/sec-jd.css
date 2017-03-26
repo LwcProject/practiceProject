@@ -16,10 +16,13 @@ body{
 	display:table;
 	clear:both;
 }
-/*¶¥²¿*/
+/*ï¿½ï¿½ï¿½ï¿½*/
 header{
 	position:relative;
 	border-bottom:2px solid #F2F2F2;
+}
+header .content footer{
+	min-width: 1000px;
 }
 .questionnaire{
 	position:absolute;
@@ -29,6 +32,7 @@ header{
 	width:33px;
 	height:135px;
 	background:url(images/j-icon.png) no-repeat -367px 0px;
+	z-index: 5;
 }
 .questionnaire:hover{
 	background:url(images/j-icon.png) no-repeat -334px 0px;
@@ -37,7 +41,7 @@ header{
 	width:1210px;
 	height:108px;
 	margin:auto;
-	
+
 }
 
 .jd-logo{
@@ -68,13 +72,13 @@ header{
 	text-decoration:none;
 	color:#484848;
 }
-/*ÖÐ¼äÄÚÈÝ*/
+/*ï¿½Ð¼ï¿½ï¿½ï¿½ï¿½ï¿½*/
 .content{
 	position:relative;
 	width:1210px;
 	height:623px;
 	margin:50px auto 60px;
-	
+
 }
 
 .content-lf{
@@ -86,7 +90,7 @@ header{
 	width:518px;
 	height:602px;
 	border-left:1px solid #F2F2F2;
-	
+
 }
 .content-lf ul{
 	height:623px;
@@ -98,7 +102,7 @@ header{
 	line-height:50px;
 	list-style:none;
 	margin-bottom:30px;
-	
+
 }
 .content-lf ul li>span{
 	padding-left:20px;
@@ -123,7 +127,7 @@ header{
 	text-decoration:none;
 	color:#3388FF;
 }
-.content-lf ul .quick-reg>a{
+.content-lf ul .quick-reg{
 	width:400px;
 	height:50px;
 	background-color:#EE2222;
@@ -133,10 +137,13 @@ header{
 	border:transparent;
 	display:inline-block;
 }
+.content-lf ul .quick-reg:hover{
+	cursor: pointer;
+}
 ul .often-phonum .num-w .drop-down{
 	position:absolute;
 	top:22px;
-	left:93px;
+	left:103px;
 	right:23px;
 	bottom:23px;
 	width:11px;
@@ -146,7 +153,7 @@ ul .often-phonum .num-w .drop-down{
 ul.often-phonum .agree-pho{
 	border-left:1px solid #F2F2F2;
 }
-/*×ÖÌå¼ä¾à´¦Àí*/
+/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½à´¦ï¿½ï¿½*/
 .content-lf ul li>.three-w{
 	letter-spacing:15px;
 }
@@ -171,7 +178,7 @@ ul.often-phonum .agree-pho{
 	width:80px;
 }
 .content-lf ul li .check{
-	width:109px; 
+	width:109px;
 	height:48px;
 	margin-top:1px;
 	margin-right:2px;
@@ -187,7 +194,7 @@ ul.often-phonum .agree-pho{
 	margin-right:2px;
 	background:url(images/getcheck.png) no-repeat 0 0;
 }
-/*ÓÒ±ßÄÚÈÝ*/
+/*ï¿½Ò±ï¿½ï¿½ï¿½ï¿½ï¿½*/
 .content-rf .company,.foreign{
 	margin-left:120px;
 }
@@ -220,7 +227,7 @@ ul.often-phonum .agree-pho{
 	width:115px;
 	margin-left:13px;
 	margin-top:35px;
-	
+
 }
 .content-rf .note{
 	width:213px;
@@ -228,7 +235,7 @@ ul.often-phonum .agree-pho{
 	margin-left:90px;
 	background:url(images/phone.jpg) no-repeat 0 0;
 }
-/*µ×²¿*/
+/*ï¿½×²ï¿½*/
 .foot{
 	width:1210px;
 	height:117px;
@@ -242,4 +249,46 @@ ul.often-phonum .agree-pho{
 .foot .foot-con a{
 	text-decoration:none;
 	color:#A3A3A3;
+}
+
+.result-show{
+	display: none;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	right: 50%;
+	bottom:50%;
+	width: 0px;
+	height: 0px;
+	z-index: 10;
+}
+.result{
+	width: 300px;
+	height:300px;
+	margin-left: -150px;
+	margin-top: -150px;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+	background-color: white;
+}
+.result-content{
+	text-align: center;
+}
+#sure{
+	margin-top: 150px;
+	width: 200px;
+	height: 30px;
+	background-color: #75DF2D;
+	border-radius: 5px;
+}
+.backgd{
+	display: none;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	z-index: 6;
+	background-color: rgba(238,238,238,0.8);
 }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style media="screen">
+    .out {
+      position: relative;
+      margin-top: 30px;
+      margin-left: 30px;
+      width: 500px;
+      height: 500px;
+      border: 1px solid #ccc;
+    }
+
+    .in {
+      position: absolute;
+      top: 50px;
+      left: 50px;
+      width: 100px;
+      height: 100px;
+      background-color: green;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="out">
+    <div class="in">
+
+    </div>
+  </div>
+  <script type="text/javascript">
+    function cl(cla) {
+      return document.getElementsByClassName(cla)[0]
+    }
+    cl('out').onmousemove = function(e) {
+      if (e.stopPropagation) {
+        e.stopPropagation()
+      }
+      if (e.preventdefault) {
+        e.preventdefault()
+      }
+      // cl('in').style.left = e.offsetX - 50 + 'px'
+      // cl('in').style.top = e.offsetY - 50 + 'px'
+      console.log(e.offsetX, e.offsetY);
+    }
+  </script>
+</body>
+
+</html>

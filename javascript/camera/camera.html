@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+<body>
+  <form class="" action="index.html" method="post">
+    <input type="text" id="inp" required pattern="\d+.[0-9]{2}">
+    <input type="submit" name="button" value="提交">
+  </form>
+  <video id='vid' width='360' poster='butterfly.jpg'>
+    <source src="c720.mp4">
+  </video>
+  <button type="button" name="button" id='btn'>play</button>
+  <button type="button" name="button" id='pause'>pause</button>
+  <input type="file" accept="image/*" capture="camera" onchange='selImg(this)'>
+  <div class="" id='show'>
+
+  </div>
+  <script>
+    // window.inp.oninput = function (event) {
+    //     var val = event.target.valueAsNumber.toString();
+    //     if (val) {
+    //         var ova = val.match(/\d+\.[0-9][0-9]/g);
+    //         if (ova instanceof Array && ova[0]) {
+    //             window.inp.value = ova[0];
+    //         }
+    //     }
+    // }
+    window.vid.onprogress = function(e) {
+      console.log(e);
+
+    }
+    window.vid.onplay = function(e) {
+      console.log('play')
+    }
+    window.btn.onclick = function() {
+      window.vid.play()
+    }
+    window.pause.onclick = function() {
+      window.vid.pause()
+    }
+
+    function selImg(node) {
+      console.log(node);
+      var reader = new FileReader();
+      reader.readAsDataURL(node.files[0]); // 吧图片转换成base64格式
+      reader.onload = function() {
+        var img = new Image();
+        img.width = 500;
+        img.src = reader.result;
+        img.onload = function() {
+          window.show.appendChild(img);
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>

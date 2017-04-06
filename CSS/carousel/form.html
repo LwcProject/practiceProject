@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="jquery-1.11.3.js"></script>
+</head>
+
+<body>
+  <div class="">
+    <h2>兴趣</h2>
+    <label for=""><input type="checkbox" name="" value="0">游泳</label>
+    <input type="checkbox" name="" value="1">爬山
+    <input type="checkbox" name="" value="2">乒乓球
+  </div>
+  <button type="button" name="button">选择</button>
+</body>
+<script type="text/javascript">
+  var data = [1, 2, 3]
+  $('input[type=checkbox]').each(function(i, el) {
+    console.log(data[i])
+    $(el).val(data[i])
+  })
+  $('button').click(function() {
+    var result = []
+    $('input[type=checkbox]:checked').map(function(v, i) {
+      result.push(v)
+    })
+    console.log(result);
+  })
+</script>
+
+</html>

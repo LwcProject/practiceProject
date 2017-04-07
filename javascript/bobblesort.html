@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>冒泡排序</h1>
+    <script type="text/javascript">
+      var arr = [1,4,6,8,3,5,2];
+    //  从0到length的顺序
+      // for(var i=0 , len= arr.length; i<len-1; i++){//排到最后，只剩一个不用排序
+      //   for(var j=0 ; j<arr.length ; j++){
+      //     if(arr[j]>arr[j+1]){
+      //       arr[j] += arr[j+1];
+      //       arr[j+1]=arr[j]-arr[j+1];//大数
+      //       arr[j]-=arr[j+1];//小数
+      //     }
+      //   }
+      // }
+      // console.log(arr);
+      //从length到0的顺序
+      for(var i=0 ; i<arr.length-1 ; i++){
+        for(var j=arr.length-1 ; j>=i; j--){//j>=n意思就是j向上排序到i的位置就结束
+          arr[j]<arr[j-1]&&(
+            arr[j]+=arr[j-1],//注意使用的是逗号
+            arr[j-1]=arr[j]-arr[j-1],
+            arr[j]-=arr[j-1]//这个不能有符号
+          )
+        }
+      }
+      console.log(arr);
+    </script>
+  </body>
+</html>

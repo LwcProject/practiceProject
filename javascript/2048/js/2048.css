@@ -59,15 +59,6 @@
 	color:#fff;
 }
 
-/*#c00,#c01,#c02,#c03{top:16px;}
-#c10,#c11,#c12,#c13{top:132px;}
-#c20,#c21,#c22,#c23{top:248px;}
-#c30,#c31,#c32,#c33{top:364px;}
-
-#c00,#c10,#c20,#c30{left:16px;}
-#c01,#c11,#c21,#c31{left:132px;}
-#c02,#c12,#c22,#c32{left:248px;}
-#c03,#c13,#c23,#c33{left:364px;}*/
 
 .n2{background-color:#eee3da}
 .n4{background-color:#ede0c8}
@@ -83,7 +74,6 @@
 .n4096{background-color:#a6c}
 .n8192{background-color:#93c}
 .n2,.n4{color:#776e65}
-.n1024,.n2048,.n4096,.n8192{font-size:40px}
 
 #gameover{
 	width: 100%;
@@ -91,7 +81,7 @@
 	position: fixed;
 	left:50%;
 	right: 50%;
-	top: 148px;/*(480/2)-100+16/2*/
+	top: 148px;
 	width: 220px;
 	height: 200px;
 	border-radius: 10px;

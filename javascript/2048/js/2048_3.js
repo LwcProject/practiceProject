@@ -15,7 +15,7 @@ var obj = {
   f: 0, //r行  c列  f查找的下一位置
   keyCd: 0,
   score: 0,
-  createEle: 0,
+  createEle: 0, //是否需要创建元素
   eleFragment: "",
   //游戏开始
   gameStart: function() {
@@ -39,7 +39,7 @@ var obj = {
           obj.moveDown();
           break;
       }
-      $("score").innerHTML = obj.score;
+      $("score").innerHTML = obj.score; //更新分数
     }
 
   },
@@ -59,7 +59,7 @@ var obj = {
     if (obj.createEle == 1) {
       obj.createEle = 0;
       $("gridPanel").innerHTML = ""; //清空原有的元素
-      $("gridPanel").appendChild(obj.eleFragment); //再添加
+      $("gridPanel").appendChild(obj.eleFragment); //添加元素
     }
     obj.score = 0;
     $("score").innerHTML = obj.score;
@@ -72,6 +72,8 @@ var obj = {
   //创建div元素，添加到gridPanel中
   create: function(r, c) {
     var grid, cell;
+    var increment = 14,
+      grWidth, grHeight, grMarginTop, grMarginLeft, ceWidth, ceHight;
     grid = document.createElement("div");
     cell = document.createElement("div");
     grid.id = "g" + r + c;
@@ -80,6 +82,24 @@ var obj = {
     cell.className = "cell";
 
     if (obj.ROW == 3) {
+      increment = 24;
+    } else if (obj.ROW == 4) {
+      increment = 18;
+    }
+    grWidth = grHeight = ceWidth = ceHight = 66 + (6 - obj.ROW) * increment; //优化后
+    grMarginTop = grMarginLeft = (480 - grWidth * obj.ROW) / (obj.ROW + 1);
+    grid.style.width = grWidth + "px";
+    grid.style.height = grHeight + "px";
+    grid.style.marginTop = grMarginTop + "px";
+    grid.style.marginLeft = grMarginLeft + "px";
+    cell.style.width = ceWidth + "px";
+    cell.style.height = ceHight + "px";
+    cell.style.top = grMarginTop + r * (grMarginTop + ceWidth) + "px";
+    cell.style.left = grMarginLeft + c * (grMarginLeft + ceHight) + "px";
+    cell.style.lineHeight = ceHight + "px";
+    cell.style.fontSize = 30 + (6 - obj.ROW) * 10 + "px";
+    //优化前
+    /*if (obj.ROW == 3) {
       grid.style.width = "140px";
       grid.style.height = "140px";
       grid.style.margin = "15px 0 0 15px";
@@ -117,7 +137,7 @@ var obj = {
       cell.style.left = 12 + c * 78 + "px";
       cell.style.fontSize = "30px";
       cell.style.lineHeight = "66px";
-    }
+    }*/
     obj.eleFragment.appendChild(grid);
     obj.eleFragment.appendChild(cell);
   },
@@ -221,14 +241,14 @@ var obj = {
         }
       }
     }
-    return -1; //循环结束仍然没有找到！=0的数值，返回-1
+    return null; //循环结束仍然没有找到！=0的数值，返回null
   },
   //左按键的处理
   dealToLeft: function(r) {
     var next;
     for (c = 0; c < obj.ROW; c++) {
       next = obj.find(r, c, c + 1, obj.CELL, 1); //找出第一个不为0的位置
-      if (next == -1) break; //没有找到就返回
+      if (next == null) break; //没有找到就返回
       //如果当前位置为0
       if (arr[r][c] == 0) {
         arr[r][c] = arr[r][next]; //把找到的不为0的数值替换为当前位置的值
@@ -241,19 +261,23 @@ var obj = {
       }
     }
   },
-  moveLeft: function() {
-    // 循环 arr数组 从左到右
+  move: function(itertor) {
     var before, //没处理前
-      after; //after处理后   nextc 清零的位置
+      after; //after处理后
     before = arr.toString();
-    for (r = 0; r < obj.ROW; r++) {
-      obj.dealToLeft(r);
-    }
+    itertor(); //执行for函数
     after = arr.toString();
     if (before != after) { //前后对比，如果不同就update
       obj.random();
       obj.updateView();
     }
+  },
+  moveLeft: function() {
+    obj.move(function() {
+      for (r = 0; r < obj.ROW; r++) {
+        obj.dealToLeft(r);
+      }
+    })
     // if 当前位置 不为零
     // 从当前位置，下一个成员开始，遍历，
     // 如果找到，与当前位置相等的数，
@@ -268,7 +292,7 @@ var obj = {
     var next;
     for (c = obj.CELL - 1; c >= 0; c--) {
       next = obj.find(r, c, c - 1, 0, -1); //找出第一个不为0的位置
-      if (next == -1) break; //没有找到就返回
+      if (next == null) break; //没有找到就返回
       //如果当前位置为0
       if (arr[r][c] == 0) {
         arr[r][c] = arr[r][next]; //把找到的不为0的数值替换为当前位置的值
@@ -282,24 +306,18 @@ var obj = {
     }
   },
   moveRight: function() {
-    var before, //没处理前
-      after; //after处理后   nextc 清零的位置
-    before = arr.toString();
-    for (r = 0; r < obj.ROW; r++) {
-      obj.dealToRight(r);
-    }
-    after = arr.toString();
-    if (before != after) { //前后对比，如果不同就update
-      obj.random();
-      obj.updateView();
-    }
+    obj.move(function() {
+      for (r = 0; r < obj.ROW; r++) {
+        obj.dealToRight(r);
+      }
+    })
   },
   //上按键处理
   dealToUp: function(c) {
     var next;
     for (r = 0; r < obj.ROW; r++) {
       next = obj.find(r, c, r + 1, obj.ROW, 1); //找出第一个不为0的位置
-      if (next == -1) break;
+      if (next == null) break;
       //如果当前位置为0
       if (arr[r][c] == 0) {
         arr[r][c] = arr[next][c]; //把找到的不为0的数值替换为当前位置的值
@@ -313,25 +331,18 @@ var obj = {
     }
   },
   moveUp: function() {
-    var before, //没处理前
-      after; //after处理后   nextc 清零的位置
-    before = arr.toString();
-    r = 0;
-    for (c = 0; c < obj.CELL; c++) {
-      obj.dealToUp(c);
-    }
-    after = arr.toString();
-    if (before != after) { //前后对比，如果不同就update
-      obj.random();
-      obj.updateView();
-    }
+    obj.move(function() {
+      for (c = 0; c < obj.CELL; c++) {
+        obj.dealToUp(c);
+      }
+    })
   },
   //下按键处理
   dealToDown: function(c) {
     var next;
     for (r = obj.ROW - 1; r >= 0; r--) {
       next = obj.find(r, c, r - 1, 0, -1); //找出第一个不为0的位置
-      if (next == -1) {
+      if (next == null) {
         break;
       }
       //如果当前位置为0
@@ -347,17 +358,11 @@ var obj = {
     }
   },
   moveDown: function() {
-    var before, //没处理前
-      after; //after处理后   nextc 清零的位置
-    before = arr.toString();
-    for (c = 0; c < obj.CELL; c++) {
-      obj.dealToDown(c);
-    }
-    after = arr.toString();
-    if (before != after) { //前后对比，如果不同就update
-      obj.random();
-      obj.updateView();
-    }
+    obj.move(function() {
+      for (c = 0; c < obj.CELL; c++) {
+        obj.dealToDown(c);
+      }
+    })
   }
 }
 window.onload = function() {
@@ -383,7 +388,6 @@ function getModel(e) { //事件冒泡获取a元素
     obj.gameStart();
   }
 }
-
 
 //   var modelValue = parseInt($("model").value);
 //   if (isNaN(modelValue)) {

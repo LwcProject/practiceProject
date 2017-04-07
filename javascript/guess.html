@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style media="screen">
+    .show {
+      position: fixed;
+      left: 0px;
+      top: 50%;
+      right: 0px;
+      display: none;
+      width: 200px;
+      height: 100px;
+      background-color: #950;
+    }
+
+    #choose {
+      width: 100px;
+      height: 50px;
+      margin: auto;
+    }
+
+    .left {
+      float: left;
+    }
+
+    .right {
+      float: right;
+    }
+
+    #sure #cancel {
+      width: 50px;
+      height: 50px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="show">
+    <div id="result">
+      游戏结果:
+    </div>
+    <div id="choose">
+      <button id="sure" class=" left">
+        确定
+      </button>
+      <button id="cancel" class=" right">
+        取消
+      </button>
+    </div>
+  </div>
+  <input type="text" name="" value="" id="num">
+  <button type="button" name="button" onclick="guess()">猜数</button>
+  <script type="text/javascript">
+    function $(id) {
+      return document.getElementById(id);
+    }
+    var random;
+    random = Math.floor(Math.random() * 10);
+    console.log(random);
+
+    function guess() {
+      var num;
+      //产生随机数
+      num = parseInt($("num").value); //获取输入的num
+      if (isNaN(num)) {
+        return;
+      }
+      document.getElementsByClassName("show")[0].style.display = "block";
+      console.log(num);
+      if (num > random) {
+        $("result").innerHTML = "游戏结果:猜大了"
+      } else if (num < random) {
+        $("result").innerHTML = "游戏结果:猜小了"
+      } else {
+        $("result").innerHTML = "游戏结果:猜对了"
+
+        random = Math.floor(Math.random() * 10);
+        console.log(random);
+      }
+    }
+    $("sure").onclick = function() {
+      document.getElementsByClassName("show")[0].style.display = "none";
+    }
+    $("cancel").onclick = function() {
+      document.getElementsByClassName("show")[0].style.display = "none";
+    }
+  </script>
+</body>
+
+</html>

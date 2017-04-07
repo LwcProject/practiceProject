@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style media="screen">
+    .result {
+      width: 200px;
+      height: 50px;
+    }
+  </style>
+</head>
+
+<body>
+  <textarea class="result" name="name" rows="8" cols="80"></textarea>
+  <div class="" onclick="calculate(event)">
+    <button type="button" name="button">1</button>
+    <button type="button" name="button">2</button>
+    <button type="button" name="button">3</button>
+    <button type="button" name="button">4</button>
+    <br>
+    <button type="button" name="button">c</button>
+    <button type="button" name="button">+</button>
+    <button type="button" name="button">-</button>
+    <button type="button" name="button">=</button>
+  </div>
+  <script type="text/javascript">
+    function $(cls) {
+      return document.getElementsByClassName(cls);
+    }
+    // var result;
+    //
+    // function calculate(e) {
+    //   var btn = e.target;
+    //
+    //   if (btn.nodeName == "BUTTON") { //判断是button才能执行
+    //     if (btn.innerHTML == "c") { //清除显示
+    //       $("result")[0].innerHTML = ""
+    //     } else if (btn.innerHTML == "=") { //=号计算结果用eval自动运算
+    //       try {
+    //         $("result")[0].innerHTML = eval($("result")[0].innerHTML);
+    //       } catch (err) {
+    //         $("result")[0].innerHTML = err.message;
+    //       }
+    //     } else { //其他button值，按一次显示在textarea上
+    //       $("result")[0].innerHTML += btn.innerHTML; //显示按的键盘值
+    //     }
+    //   }
+    // }
+    //不用eval
+    var str, arrNum,
+      arropr = [],
+      result, num;
+
+    function calculate(e) {
+      var btn = e.target;
+      if (btn.nodeName == "BUTTON") { //判断是button才能执行
+
+        if (btn.innerHTML == "c") {
+          $("result")[0].innerHTML = "";
+          arrNum = []; //清空数组的元素
+          arropr = [];
+        } else if (btn.innerHTML == "=") {
+
+          str = $("result")[0].innerHTML;
+          console.log(str);
+          //正则获取数字字符串，获取算术运算符
+          num = str.replace(/\-|\+/g, function(i) {
+            arropr.push(i);
+            return ","
+          })
+          arrNum = num.split(","); //转化为数组
+          console.log(arrNum);
+          console.log(arropr);
+          for (var i = 0; i < arrNum.length; i++) {
+            if (i == 0) { //第一个数不执行计算
+              result = parseInt(arrNum[0]);
+              continue;
+            }
+            if (arropr[i - 1] == "-") { //如果第二个数的前一个算术运算符是-
+              result -= parseInt(arrNum[i]); //第1个数减去第二个数
+            } else {
+              result += parseInt(arrNum[i]);
+            }
+          }
+          $("result")[0].innerHTML = result;
+          arrNum.length = 0;
+          arropr.length = 0;
+        } else {
+          $("result")[0].innerHTML += btn.innerHTML;
+        }
+
+      }
+    }
+  </script>
+</body>
+
+</html>

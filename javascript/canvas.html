@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <canvas id="canvas" width="300" height="400"></canvas>
+    <span> spansapspsofiasfjosiafjs</span>
+    <script type="text/javascript">
+      (function initial(){
+        var elem = document.getElementById('canvas');
+        var canvas = elem.getContext('2d');
+        //var grad = canvas.createLinearGradient(0,0,10,100);
+        // grad.addColorStop(0.5,'#0000ff');
+        // grad.addColorStop(1,'#ff0000');
+        // canvas.fillStyle=grad;
+        //canvas.strokeStyle='#990000';
+        //canvas.strokeRect(100,100,120,120);
+        // canvas.fillRect(110,110,100,100);
+        // canvas.clearRect(120,120,80,80);
+        // canvas.fillRect(10,10,100,100);
+        // canvas.fillRect(150,10,200,100);
+        //文字
+        // canvas.font ='bold 24px verdana ,sans-serif';
+        // canvas.texAlign='center';
+        // canvas.textBaseline='bottom';
+        // canvas.fillText('beijing Tasafgfdgfg',100,150);
+        //  var size =canvas.measureText("beijing Tasaffdsf");
+        //  console.log(size);
+        //  canvas.strokeRect(100,100,size.width,32);
+        //阴影
+        // canvas.shadowColor='rgba(169,25,0,0.5)';
+        // canvas.shadowOffsetX=4;
+        // canvas.shadowOffsetY=4;
+        // canvas.shadowBlur=5;
+        // canvas.font='bold 50px verdana,sans-serif';
+        // canvas.fillText('Tarena',100,100);
+        //绘制圆
+        // canvas.fillStyle = "#eeeeef";
+        // canvas.fillRect(0,0,600,700);
+        // for(var i =0;i<=10;i++){
+        //   canvas.beginPath();
+        //   canvas.arc(i*25,i*25,i*8,0,Math.PI*2,true);
+        //   canvas.closePath();
+        //   canvas.fillStyle ="rgba(255,0,0,0.5)";
+        //   canvas.fill();
+        // }
+        //lineTo
+        canvas.fillStyle='#eeeeef';
+        canvas.fillRect(0,0,300,400);
+        var dx=150;
+        var dy=150;
+        var s=100;
+        canvas.beginPath();
+        canvas.fillStyle="rgb(100,255,100)";
+        canvas.strokeStyle="rgb(0,0,100)"
+        var x= Math.sin(0);
+        var y=Math.cos(0);
+        var dig = Math.PI/15*11;
+        for(var i=0; i<30;i++){
+          var x = Math.sin(i*dig)
+          var y = Math.cos(i*dig);
+          canvas.lineTo(dx+x*s,dy+y*s);
+        }
+        canvas.closePath();
+        canvas.fill();
+        canvas.stroke();
+
+      }());
+
+    </script>
+  </body>
+</html>

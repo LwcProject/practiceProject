@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      span{
+        position:relative;
+        left: 0px;
+        top:0px;
+        border:30px solid transparent;
+        border-bottom-color: red;
+        animation: myfirst 5s;
+        -webkit-animation:myfirst 5s;
+      }
+      @keyframes  myfirst{
+        0%  {border-bottom-color: red; left:0px; top:0px;}
+        25% {border-bottom-color: yellow; left:200px; top:0px;}
+        50% {border-bottom-color: red; left:200px; top:200px;}
+        75% {border-bottom-color: yellow; left:0px; top:200px;}
+        100%  {border-bottom-color: red; left:0px; top:0px;}
+      }
+      @keyframes myfirst {
+        0%  {border-bottom-color: red; left:0px; top:0px;}
+        25% {border-bottom-color: yellow; left:200px; top:0px;}
+        50% {border-bottom-color: red; left:200px; top:200px;}
+        75% {border-bottom-color: yellow; left:0px; top:200px;}
+        100%  {border-bottom-color: red; left:0px; top:0px;}
+      }
+    </style>
+  </head>
+  <body>
+    <span class=""></span>
+  </body>
+</html>

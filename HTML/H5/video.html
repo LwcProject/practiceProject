@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      .videos{
+        width:640px;
+        height:360px;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="choose">
+        <form class="" action="index.html" method="post">
+          请选择视频 <input type="file" name="选择文件" value="" id='filePath'>
+        </form>
+        <button type="button" name="button" id='add'>添加</button>
+      </div>
+      <div class="audios">
+        <audio   width="200px" height="50px" controls loop>
+          <source src="F:\music/张杰 - 逆战.flac" type="">
+        </audio>
+      </div>
+        <video autoplay id='videosSrc' class="videos" src='http://player.youku.com/embed/XMjcyMTMyMjA0MA==' controls loop>
+          <!-- <source id='videosSrc' src=""> -->
+        </video>
+    </div>
+    <script type="text/javascript">
+      function $(id){
+        return document.getElementById(id);
+      }
+      $('add').onclick= function () {
+        console.log(2222);
+        console.log($('filePath').value);
+        if($('filePath').value!=''){
+          //有路径的情况下才添加
+          var file = $('filePath').value;
+          //抽出文件名
+          var videoulr =file.substring(file.lastIndexOf('\\')+1);
+          console.log(videoulr);
+          //设置video 的src 才能出现视频
+          //设置source的 src 无法出现视频
+          $('videosSrc').src = "D:/xampp/htdocs/"+videoulr;
+          console.log($('videosSrc').src);
+
+        }
+      }
+    </script>
+  </body>
+</html>

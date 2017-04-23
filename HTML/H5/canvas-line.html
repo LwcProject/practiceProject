@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <canvas id="canvas" width="600" height="600"></canvas>
+    <script type="text/javascript">
+      function init(){
+        var elem = document.getElementById('canvas');
+        var canvas = elem.getContext('2d');
+        // for(var i =0 ;i<3 ;i++){
+        //   image = new Image();
+        //   image.src='img/user.jpg';
+        //   image.onload = function(){
+        //     canvas.drawImage(image,i*10,i*10,50,50);
+        //   }
+        // }
+        var img = new Image();
+        img.src ='img/user.jpg';
+        var ptrn= canvas.createPattern(img,'repeat');
+        canvas.fillStyle=ptrn;
+        canvas.fillRect(0,0,400,300);
+      }
+      window.onload = function(){
+        init();
+      }
+    </script>
+  </body>
+</html>

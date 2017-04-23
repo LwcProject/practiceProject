@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      #area ,.ball2{
+        width: 400px;
+        height: 200px;
+        border: 5px solid green;
+        border-radius: 5px;
+      }
+      .ball2{
+        margin-top: 5px;
+        border-color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="area">
+        <canvas id="canvas" width="400" height="200"></canvas>
+      </div>
+      <div class="ball2">
+        <canvas id="canvas2" width="400" height="400"></canvas>
+      </div>
+    </div>
+    <script type="text/javascript">
+      function $(id){
+        return document.getElementById(id);
+      }
+
+      var ball = function(){
+        return{
+          WIDTH: parseInt(document.defaultView.getComputedStyle($('area')).width),//运动区域的宽度
+          HEIGHT: parseInt(document.defaultView.getComputedStyle($('area')).height),//运动区域的高度
+          x:0,
+          y:0,
+          r:0,
+          color:'red',
+          speedX:0,
+          speedY:0,
+          canvas: $('canvas').getContext('2d'),
+          balls:[],
+          ballInit:function(){
+
+          // for(var i = 0 ;i <10; i++){
+            this.ballArgument();
+          //   var ballCreate =  new this.drawBall();//记录球编号
+          //   this.balls.push(ballCreate);
+             this.drawBall();
+          // }
+            this.moving();
+          },
+          //封装产生随机数的函数
+          rand:function(min,max){
+            return Math.floor(Math.random()*(max-min)+min);
+          },
+            //确定球的各项参数
+          ballArgument:function(){
+            //先确定半径
+            this.r = this.rand(10,50);
+            //圆心位置
+            this.x = this.rand(this.r, this.WIDTH-this.r);
+            this.y = this.rand(this.r, this.HEIGHT-this.r);
+            //颜色
+            this.color = 'rgba('+this.rand(0,255)+','+this.rand(0,255)+','
+            +this.rand(0,255)+','+(Math.random()+0.1)+')';//透明度不能等于0
+            //速度
+            this.speedX = this.rand(1,2)*(this.rand(0,2)>1?1:-1);//区分方向
+            this.speedY = this.rand (1,2)*(this.rand(0,2)>1?1:-1);
+          },
+          //画球
+          drawBall:function(){
+                this.canvas.fillStyle = this.color;
+                this.canvas.beginPath();
+                this.canvas.arc(this.x, this.y,this.r,0,Math.PI*2,true);
+                this.canvas.closePath();
+                this.canvas.fill();
+          },
+          //球移动位置改变
+          bounce:function(){
+            this.x += this.speedX;
+            this.y += this.speedY;
+            //碰到右边框反弹
+            if( this.x >= this.WIDTH-this.r){
+              this.speedX *=-1;
+            }
+            //碰左边框
+            if( this.x <= this.r) {
+              this.speedX *=-1;
+            }
+            //碰到上边框
+            if( this.y <=this.r){
+              this.speedY *=-1;
+            }
+            //碰到下边框
+            if( this.y >= this.HEIGHT - this.r){
+              this.speedY *=-1;
+            }
+          },
+          moving:function(){
+            this.canvas.clearRect(0,0,this.WIDTH,this.HEIGHT);
+          //  console.log(this.balls);
+          //  for(var i= 0 ;i<this.balls.length;i++){
+              //
+             //var ball = this.balls[i];
+              //重新画球
+              this.drawBall();
+              //移动球
+              this.bounce();
+          //  }
+            window.requestAnimationFrame(this.moving.bind(this));
+          }
+        }
+      };
+      var ball1= new ball();
+      ball1.ballInit();
+      var ball2 = new ball();
+      ball2.canvas =$('canvas2').getContext('2d');
+      ball2.ballInit();
+    </script>
+  </body>
+</html>

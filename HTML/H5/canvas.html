@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      .taiji>canvas , .d1{
+        margin: auto;
+      }
+      .d1{
+        animation: rotating 2s linear infinite ;
+      }
+      @keyframes rotating {
+        from{transform: rotate(0deg);}
+        to{transform: rotate(360deg);}
+      }
+    </style>
+  </head>
+  <body>
+    <div class="d1" style="width:100px; height:100px ;  background-color:red;"></div>
+    <canvas id="canvas" width="300" height="300"></canvas>
+    <div class="taiji">
+      <canvas id="canvas1" width="400" height="400"></canvas>
+    </div>
+    <script type="text/javascript">
+      function drawCircle(){
+        var elem = document.getElementById('canvas');
+        var canvas = elem.getContext('2d');
+        canvas.beginPath();
+        canvas.arc(100,100,40,0,Math.PI*2,false);
+        canvas.closePath();
+        canvas.fillStyle = 'yellow';
+        canvas.fill();
+      }
+      function drawCircle2(){
+        var elem = document.getElementById('canvas1');
+        var canvas = elem.getContext('2d');
+        //绘制一个大圆
+        canvas.beginPath();
+        var x = 200, y = 200;//先确定坐标
+        canvas.arc( x,y,80,0,Math.PI*2,false);
+        canvas.stroke();
+        //左边黑半圆
+        canvas.fillStyle = 'black';
+        canvas.beginPath();
+        //context.arc(x,y,r,sAngle,eAngle,counterclockwise);
+        // x y 坐标 ，r半径  ，sAngle起始角  eAngle 结束角 ，counterclockwise顺逆方向
+        canvas.arc(x,y,80,Math.PI*0.5,Math.PI*1.5,false);
+        canvas.fill();
+        //右白圆
+        canvas.fillStyle = 'white';
+        canvas.beginPath();
+        canvas.arc(x,y,80,Math.PI*1.5,Math.PI*0.5,false);
+        canvas.fill();
+        //上半圆的白圆
+        canvas.fillStyle = 'white'
+        canvas.beginPath();
+        canvas.arc(x,y-40,40,0,Math.PI*2,false);
+        canvas.fill();
+        //下半圆的黑圆
+        canvas.fillStyle = 'black';
+        canvas.beginPath();
+        canvas.arc(x,y+40,40,0,Math.PI*2,false);
+        canvas.fill();
+        //上半圆的小黑圆
+        canvas.fillStyle = 'black';
+        canvas.beginPath();
+        canvas.arc(x,y-40,10,0,Math.PI*2,false);
+        canvas.fill();
+        //下半圆的小白圆
+        canvas.fillStyle = 'white';
+        canvas.beginPath();
+        canvas.arc(x,y+40,10,0,Math.PI*2,false);
+        canvas.fill();
+        canvas.save();
+        //旋转效果
+        setTimeout(function(){
+          canvas.translate(x,y);//平移
+          canvas.rotate(Math.PI/30);
+          canvas.translate(-x,-y);//再反方向平移
+          drawCircle2();
+        },25);
+      }
+
+      window.onload = function(){
+        drawCircle();
+        drawCircle2();
+      }
+    </script>
+  </body>
+</html>

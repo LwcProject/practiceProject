@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <style media="screen">
+    #slider {
+      position: relative;
+      margin: 50px auto;
+      width: 300px;
+      height: 200px;
+      border: 1px solid #ccc;
+      overflow: hidden;
+    }
+
+    #slider2 {
+      position: relative;
+      margin: 50px auto;
+      width: 300px;
+      height: 200px;
+      border: 1px solid #ccc;
+      overflow: hidden;
+    }
+
+    .container {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      bottom: 0px;
+    }
+
+    .container img {
+      width: 300px;
+      height: 200px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id='slider'>
+    <div class="container">
+
+    </div>
+  </div>
+  <div id='slider2'>
+    <div class="container">
+
+    </div>
+  </div>
+  <script type="text/javascript">
+    // 从右往左移动
+    var slider = function() {
+      return {
+        IMG_WIDTH: 0,
+        IMG_HEIGHT: 0,
+        DURATION: 500, // 每次移动的持续时间 移动 -> 等待 （移动完一张图片，或者点击移动一次的时间）
+        WAIT: 2000, // 移动完毕 观众看图时间 动画暂停等待时间
+        STEPS: 50, // 动画 运动  本次动画 需要多少次单位移动  单位移动次数
+        INTERVAL: 0, // 单位时间 一次 setTimeout 的等待时间
+        UNIT_LENGTH: 0, // 单位时间移动 的 单位长度
+        timer: null,
+        moved: 0, // 已经移动了的单位次数，用于判断 是否可 左移动 或 右移动,
+        canPlay: true,
+        images: [], // this 装载的图片路径
+        viewEle: null, // 视图元素
+        containerEle: null, // 容器元素
+        init: function() {
+          //检查user是否定制了容器
+          if (!this.containerEle) {
+            var div = document.createElement('div')
+            console.log(this.viewEle);
+            this.viewEle.appendChild(div) //在viewElem里创建div
+            this.containerEle = this.viewEle.firstElementChild //第一个元素是containerELe
+            this.viewEle.style.position = 'relative'
+            this.containerEle.style.position = 'absolute'
+            this.containerEle.style.left = '0px'
+            this.containerEle.style.top = '0px'
+            this.containerEle.style.bottom = '0px'
+          }
+          // 初始化img样式
+
+          // 获取视图宽度，调节图片宽度
+          this.IMG_WIDTH = parseInt(getComputedStyle(this.viewEle).width)
+          this.IMG_HEIGHT = parseInt(getComputedStyle(this.viewEle).height)
+
+          // 初始化 容器宽度
+          this.containerEle.style.width = this.IMG_WIDTH * this.images.length + 'px'
+          // 计算 动画单位时间  动画总时间 除以 动画总 单位次数
+          this.INTERVAL = this.DURATION / this.STEPS
+          // this.IMG_WIDTH = parseInt(getComputedStyle(this.viewEle).width)
+          // 容器绑定mouseover事件
+          this.viewEle.onmouseover = function() {
+            // 查看时 不播放动画
+            this.canPlay = false
+          }
+          // 给容器绑定mouseout事件
+          this.viewEle.onmouseout = function() {
+            this.canPlay = true
+          }
+
+          // 更新视图 添加图片
+          this.updateView()
+          this.UNIT_LENGTH = this.IMG_WIDTH / this.STEPS //计算每步要移动多少像素
+          // 启动 动画播放
+          this.autoPlay()
+        },
+        init_img_style: function() {
+          var imgs = this.containerEle.children
+          for (var i = 0; i < imgs.length; i++) {
+            imgs[i].style.width = this.IMG_WIDTH + 'px'
+            imgs[i].style.height = this.IMG_HEIGHT + 'px'
+          }
+        },
+        updateView: function() {
+          // 添加图片到容器
+          this.containerEle.innerHTML = ''
+          var docFrgment = document.createDocumentFragment()
+          this.images.map(function(src) {
+            var img = document.createElement('img')
+            img.src = src
+            img.style.maxWidth = this.IMG_WIDTH + 'px'
+            img.style.maxHeight = this.IMG_HEIGHT + 'px'
+            docFrgment.appendChild(img)
+          })
+          this.containerEle.appendChild(docFrgment)
+          this.init_img_style()
+          // if (!this.containerEle) {
+          // }
+        },
+        playAnimation: function() {
+          // 获取容器 left
+          var left = parseInt(getComputedStyle(this.containerEle).left)
+          // this.UNIT_LENGTH = this.IMG_WIDTH / this.STEPS
+          this.containerEle.style.left = left - this.UNIT_LENGTH + 'px'
+          //
+          this.moved++ //49
+            // 当前 状态是否 可移动
+            if (this.moved < this.STEPS) {
+              // 继续play
+              this.timer = setTimeout(this.playAnimation.bind(this), this.INTERVAL)
+            } else {
+              // 重置移动记录
+              this.moved = 0
+              clearTimeout(this.timer);
+              this.timer = null // 清空定时器
+              // 重置容器位置
+              this.containerEle.style.left = '0px'
+              this.images = this.images.concat(this.images.splice(0, 1))
+              this.updateView()
+              // 动画结束，从新启动动画
+              this.autoPlay()
+            }
+        },
+        autoPlay: function() {
+          if (this.canPlay) {
+            this.timer = setTimeout(this.playAnimation.bind(this), this.WAIT)
+          } else {
+            clearTimeout(this.timer)
+            this.timer = setTimeout(this.autoPlay.bind(this), this.WAIT)
+          }
+        }
+
+      }
+    }
+
+
+    window.onload = function() {
+      var slider1 = new slider()
+      slider1.images = [
+        "./img/1.jpg",
+        "./img/2.jpg",
+        "./img/3.jpg",
+        "./img/4.jpg",
+      ]
+
+      slider1.viewEle = document.getElementById('slider') //获取元素
+      slider1.containerEle = document.getElementById('slider').firstElementChild
+      // document.getElementsByClassName('container')[0]
+      slider1.init()
+    }
+    var slider2 = new slider()
+    console.log(slider2);
+    slider2.images = [
+      "./img/1.jpg",
+      "./img/2.jpg",
+      "./img/3.jpg",
+      "./img/4.jpg",
+    ]
+    slider2.WAIT = 1000
+    slider2.viewEle = document.getElementById('slider2') //获取元素
+    slider2.containerEle = document.getElementById('slider2').firstElementChild
+    // document.getElementsByClassName('container')[0]
+    slider2.init()
+  </script>
+</body>
+
+</html>

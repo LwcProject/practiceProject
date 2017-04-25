@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>轮播焦点图</title>
+  <script src="jquery-1.11.3.js"></script>
+  <style>
+    .head {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      right: 50%;
+      bottom: 50% ;
+      width:0px;
+      height: 0px;
+    }
+
+    .out {
+      position: relative;
+      width: 300px;
+      height: 200px;
+      margin-top: -100px;
+      margin-left: -150px;
+      border: 2px solid #000;
+      /*overflow: hidden;*/
+    }
+
+    .in {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      width: 1200px;
+      height: 200px;
+      /*border: 1px solid #888;*/
+    }
+
+    .in img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      /*display: none;*/
+      width: 300px;
+      height: 200px;
+    }
+    .out .num{
+      width: 100%;
+      position: absolute;
+      left: 0;
+      bottom: 10px;
+      text-align: center;
+      font-size: 0px;/*消去li间隙*/
+      padding: 0px;
+    }
+    .out .num li{
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      background-color: #666;
+      color: #fff;
+      text-align: center;
+      line-height: 20px;
+      border-radius: 50%;
+      display: inline-block;
+      margin: 0 3px;
+      cursor: pointer;
+    }
+    .out .num li.active{
+      background-color: #a00;
+    }
+
+    .out .btn{
+      position: absolute;
+      top: 50%;
+      margin-top: -30px;
+      width: 30px;
+      height: 60px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      text-align: center;
+      line-height: 60px;
+      display: none;
+      cursor: pointer;
+    }
+    /*@font-face {
+
+      font-family: 'iconfont';
+    }
+    .iconfont{
+      font-family:"iconfont";
+      font-size:16px;
+      font-style:normal;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-stroke-width: 0.2px;
+      -moz-osx-font-smoothing: grayscale;
+    }*/
+    .out:hover .btn{
+      display: block;
+    }
+    .out .left{
+      left: 0px;
+    }
+    .out .right{
+      right: 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="head">
+    <div class="out">
+      <div class="in">
+      </div>
+      <ul class="num">
+      </ul>
+      <div class="left btn"><</div>
+      <div class="right btn">></div>
+    </div>
+  </div>
+    <script>
+    var banner = function(){
+      return {
+        imgUrl : ['img/1.jpg', 'img/2.jpg', 'img/3.jpg','img/4.jpg'],
+        size :0,
+        index:0,
+        timer:null,
+        leftBtn:false,
+        rightBtn:false,
+        init:function(){
+          var _this = this;//保存this
+          this.size = this.imgUrl.length;
+          this.appendImg();
+          //图片自动播放
+          this.timer = setInterval(function(){
+            _this.index++;
+            _this.move();
+          },1500);
+          //鼠标停在图片编号上切换对应图片
+          $('.num li').mouseover(function(){
+            $(this).addClass('active').siblings().removeClass('active');
+            _this.index = $(this).index();
+            $('.out .in img').eq(_this.index).stop().fadeIn(300).siblings().stop().fadeOut(300);//用stop防止鼠标移除后还在fade动画有延迟
+          });
+
+          //左按钮
+          $('.out .left').click(function(){
+            _this.index--;
+            _this.move();
+          });
+          //右按钮
+          $('.out .right').click(function(){
+            _this.index++;
+            _this.move();
+          });
+          //定时器开启和清除
+          $('.out').hover(function(){
+            clearTimeout(_this.timer);
+          }, function(){
+            console.log(_this);
+            _this.timer = setInterval(function(){
+            _this.index++;
+            _this.move();
+          },1500);
+          });
+        },
+
+        appendImg:function() {
+          var innerhtml = '';
+          var li = '';
+          //添加图片和图片编号到html中
+          this.imgUrl.map(function (v,j) {
+            innerhtml += "<img src='" + v + "'>";
+            li +='<li>'+(j+1)+'</li>';
+          });
+          /* 在使用innerHTML 的时候，已经是清除 class 为 .in
+          *  的这个div 的所有内容了
+          *  因为innerHTML就是先清除，然后替换
+          */
+          $('.in')[0].innerHTML = innerhtml;
+          $('.num').html(li);
+          //加载完成默认图片一
+          $('.num li').eq(0).addClass('active');
+        },
+        move: function(){
+          //最右边的图
+          if(this.index==this.size){
+            this.index=0;
+          }
+          //最左边的图
+          if(this.index<0){
+            this.index=this.size-1;
+          }
+          $('.num li').eq(this.index).addClass('active').siblings().removeClass('active');
+          $('.out .in img').eq(this.index).fadeIn(400).siblings().fadeOut(400);
+        },
+      }
+    }
+    var banner1 =banner();
+    banner1.init();
+    </script>
+</body>
+
+</html>

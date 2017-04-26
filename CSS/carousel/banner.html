@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      *{
+        padding: 0;
+        margin: 0px;
+        list-style: none;
+        box-sizing: border-box;
+      }
+      #banner1 ,   #banner2 , #banner3{
+        position: relative;
+        margin: 50px auto;
+        width: 500px;
+        height: 300px;
+        overflow: hidden;
+      }
+      #banner2{
+        position: relative;
+        width: 400px;
+        height: 200px;
+      }
+      #banner3{
+        position: relative;
+        width: 300px;
+        height: 100px;
+      }
+
+      .container {
+        position: absolute;
+        /*border: 5px solid #000;*/
+        width: 500px;
+        height: 300px;
+      }
+
+      .container .img{
+        position: absolute;
+        /*left: 0px;*/
+        top: 0px;
+        width: 5000px;
+      }
+      .container .img li{
+
+        float: left;
+      }
+      .container .img img{
+        width: 500px;
+        height: 300px;
+      }
+      .container .num{
+        position: absolute;
+        width: 100%;
+        bottom: 10px;
+        left: 0;
+        text-align: center;
+        font-size: 0px;
+        z-index: 5;
+      }
+      .container .num li{
+        width: 10px;
+        height: 10px;
+        background-color: #fff;
+        border-radius: 50%;
+        display: inline-block;
+        margin: 0 3px;
+        cursor: pointer;
+      }
+      .container .num li.active{
+        background-color: #DB192A;
+      }
+      .container .btn {
+        display: none;
+        position: absolute;
+        width: 30px;
+        height: 50px;
+        background-color: rgba(0, 0, 0, 0.5);
+        top: 50%;
+        margin-top: -25px;
+        text-align: center;
+        line-height: 50px;
+        color: #fff;
+        font-size: 30px;
+        font-family: "宋体";
+        cursor: pointer;
+      }
+      .container:hover .btn{
+        display: block;
+      }
+      .container  .btn_l{
+        left: 0;
+      }
+      .container  .btn_r{
+        right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="banner1">
+      <div class="container">
+        <ul class="img">
+        </ul>
+        <ul class="num">
+        </ul>
+        <div class="btn btn_l">&lt;</div>
+        <div class="btn btn_r">&gt;</div>
+      </div>
+    </div>
+
+    <div id= 'banner2'>
+      <div class="container">
+        <ul class="img">
+        </ul>
+        <ul class="num">
+        </ul>
+        <div class="btn btn_l">&lt;</div>
+        <div class="btn btn_r">&gt;</div>
+      </div>
+    </div>
+    <div id="banner3">
+      <div class="container">
+        <ul class="img">
+        </ul>
+        <ul class="num">
+        </ul>
+        <div class="btn btn_l">&lt;</div>
+        <div class="btn btn_r">&gt;</div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <script type="text/javascript">
+    var banner = function(){
+      return {
+        index: 0,
+        imgUrl :['img/a.jpg', 'img/b.jpg', 'img/c.jpg','img/d.jpg'],
+        size : 0,
+        IMG_WIDTH:0,
+        IMG_HEIGHT:0,
+        timer : null,
+        viewEle:null,//视窗元素
+        container:null,//容器
+        autoPlayT:2000,//自动播放间隙时间
+        init:function(){
+            var _this = this;
+            if(_this.viewEle==undefined){
+              return;
+            }
+            _this.size = _this.imgUrl.length+1,// +1 加上clone的一个
+            //初始化容器宽高
+            $(_this.viewEle+_this.container).css({"width":_this.IMG_WIDTH+"px","height":_this.IMG_HEIGHT+"px"});
+            _this.appendImg();
+            _this.circleDeal();
+            _this.autoPlay();
+            _this.keyClick();
+        },
+        //加载图片和圆点
+        appendImg:function() {
+          var innerhtml = '';
+          var li = '';
+          var clone;
+          this.imgUrl.map(function (v,j) {
+            innerhtml += "<li><a href='#'><img src='" + v + "' style='width:"+this.IMG_WIDTH+"px;height:"+this.IMG_HEIGHT+"px' ></a></li>"
+            if(j == 0){
+              li='<li class="active"></li>';////默认第一个圆点高亮
+              return;//结束本次循坏
+            }
+            li +='<li></li>';
+          }.bind(this));//重定向this为banner
+          /* 在使用innerHTML 的时候，已经是清除 class 为 .in
+          *  的这个div 的所有内容了
+          *  因为innerHTML就是先清除，然后替换
+          */
+          $(this.viewEle+this.container+'.img').html(innerhtml);
+          //克隆第一张到最后面
+          clone = $(this.viewEle+this.container+'.img li').first().clone();
+          $(this.viewEle+this.container+'.img').append(clone);
+          //添加圆点到num里
+          $('.num').html(li);
+        },
+        //mouseover圆点处理
+        circleDeal:function(){
+          //鼠标划入圆点效果
+          var this_cir = this; //保存this 到变量中
+          $(this_cir.viewEle+this_cir.container+'.num').on('mouseover','li',function(){//为动态添加的元素绑定事件用on 旧jQ版本用live 或者bind //直接使用hover绑定会没有效果
+            var circleInd = $(this).index();//获取圆点下标
+            this_cir.index = circleInd;
+            $(this_cir.viewEle+this_cir.container+'.img').stop().animate({left:-circleInd*this_cir.IMG_WIDTH},500);
+            $(this).addClass('active').siblings().removeClass('active');
+          });
+        },
+        //自动播放处理
+        autoPlay:function(){
+          var this_play = this;
+          //自动轮播
+          this_play.timer = setInterval(function(){
+            this_play.index++;
+            this_play.move();
+          },this_play.autoPlayT);
+          //鼠标移入容器停止自动轮播
+          $(this_play.viewEle).hover(function(){
+            clearInterval(this_play.timer);
+          },function(){
+            this_play.timer = setInterval(function(){
+              this_play.index++;
+              this_play.move();
+            },this_play.autoPlayT);
+          });
+        },
+        //按钮处理
+        keyClick:function(){
+          var this_key = this;
+          //向左按钮
+          $(this_key.viewEle+this_key.container+'.btn_l').click(function(){
+            this_key.index--;
+            this_key.move();
+          });
+          //向右按钮
+          $(this_key.viewEle+this_key.container+'.btn_r').click(function(){
+            this_key.index++;
+            this_key.move();
+          });
+        },
+        //图片移动处理
+        move:function(){
+            //第一张再次向左点击
+            if(this.index == -1){
+              this.index = this.size -2;//回到倒数第二张
+              $(this.viewEle+this.container+'.img').css('left',-(this.size-1)*this.IMG_WIDTH+'px')//拉到最后一张
+            }
+            //最后一张再次向右点击
+            if(this.index == this.size){
+              $(this.viewEle+this.container+'.img').css('left','0px');//拉到第一张图
+              this.index = 1;//下次图为第二张
+            }
+            $(this.viewEle+this.container+'.img').stop().animate({left:-this.index*this.IMG_WIDTH},500);
+            //最后一张图，再次向右移动到第一张时，圆点回到第一个
+            if(this.index == this.size -1){
+              $(this.viewEle+this.container+'.num li').eq(0).addClass('active').siblings().removeClass('active');
+            }else {
+              $(this.viewEle+this.container+'.num li').eq(this.index).addClass('active').siblings().removeClass('active');
+            }
+          },
+      }
+    }
+    var banner1 = new banner();
+    banner1.viewEle ='#banner1 ';
+    banner1.container ='.container ';
+    banner1.IMG_WIDTH = 500;
+    banner1.IMG_HEIGHT= 300;
+    banner1.init();
+    var banner2 = new banner();
+    banner2.viewEle = '#banner2 ';
+    banner2.container= '.container ';
+    banner2.imgUrl = ['img/1.jpg', 'img/2.jpg', 'img/3.jpg','img/4.jpg'];
+    banner2.IMG_WIDTH = 400;
+    banner2.IMG_HEIGHT= 200;
+    banner2.autoPlayT = 1000;
+    banner2.init();
+    var banner3 = new banner();
+    banner3.viewEle = '#banner3 ';
+    banner3.container= '.container ';
+    banner3.imgUrl = ['img/5.jpg', 'img/6.jpg', 'img/a.jpg','img/b.jpg']
+    banner3.IMG_WIDTH = 300;
+    banner3.IMG_HEIGHT= 100;
+    banner3.autoPlayT = 2500;
+    banner3.init();
+    </script>
+  </body>
+</html>

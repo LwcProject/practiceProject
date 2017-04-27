@@ -10,6 +10,12 @@
   <title>calendar</title>
   <script src="jquery-1.11.3.js"></script>
   <style>
+    .container{
+      width: 300px;
+      height: 500px;
+      margin: 50px auto;
+      cursor: pointer;
+    }
     .clear:after {
       content: "";
       display: table;
@@ -19,27 +25,12 @@
     .left {
       float: left;
     }
-
-    ul {
-      padding: 0px;
-      margin-top: 5px;
-      margin-bottom: 0px;
-    }
-
-    ul>li {
-      float: left;
-      list-style: none;
-      width: 30px;
-      height: 21px;
-      border: 1px solid #ccc;
-      text-align: center;
-    }
-
-    .gray {
-      color: #766565;
+    .rf{
+      float: right;
     }
 
     .top {
+      width: 300px;
       height: 25px;
     }
 
@@ -55,12 +46,33 @@
       margin-top: 4px;
     }
 
-    .top .content {
-      width: 185px;
-      height: 5px;
+    .top .date {
+      width: 260px;
+      display: inline-block;
+      text-align: center;
+    }
+    .content{
+      width: 300px;
+      height:500px;
+    }
+    .content ul {
+      padding: 0px;
+      margin-top: 5px;
+      margin-bottom: 0px;
+    }
+
+    .content ul>li {
+      float: left;
+      list-style: none;
+      width: 40px;
+      height: 25px;
+      border: 1px solid #ccc;
       text-align: center;
     }
 
+    .gray {
+      color: #766565;
+    }
     .selected {
       background-color: red;
     }
@@ -68,80 +80,82 @@
 </head>
 
 <body>
-  <div class="top clear">
-    <div class="left lf-tri" onclick="lastMonth()"></div>
-    <div class="left content">2017年2月1日</div>
-    <div class="left rf-tri" onclick=" nextMonth()"></div>
+  <div class="container">
+    <div class="top clear">
+      <div class="left lf-tri" onclick="lastMonth()"></div>
+      <div class="date">2017年2月1日</div>
+      <div class="rf rf-tri" onclick=" nextMonth()"></div>
+    </div>
+    <div class="content">
+      <div id="week">
+        <ul class="clear">
+          <li>日</li>
+          <li>一</li>
+          <li>二</li>
+          <li>三</li>
+          <li>四</li>
+          <li>五</li>
+          <li>六</li>
+          <ul>
+      </div>
+      <div id="date">
+        <ul class="clear">
+          <li>30</li>
+          <li>31</li>
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+          <li>4</li>
+          <li>5</li>
+        </ul>
+        <ul class="clear">
+          <li>6</li>
+          <li>7</li>
+          <li>8</li>
+          <li>9</li>
+          <li>10</li>
+          <li>11</li>
+          <li>12</li>
+        </ul>
+        <ul class="clear">
+          <li>13</li>
+          <li>14</li>
+          <li>15</li>
+          <li>16</li>
+          <li>17</li>
+          <li>18</li>
+          <li>19</li>
+        </ul>
+        <ul class="clear">
+          <li>20</li>
+          <li>21</li>
+          <li>22</li>
+          <li>23</li>
+          <li>24</li>
+          <li>25</li>
+          <li>26</li>
+        </ul>
+        <ul class="clear">
+          <li>27</li>
+          <li>28</li>
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+          <li>4</li>
+          <li>5</li>
+        </ul>
+        <ul class="clear">
+          <li>27</li>
+          <li>28</li>
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+          <li>4</li>
+          <li>5</li>
+        </ul>
+      </div>
+      <div>
   </div>
-  <div>
-    <div id="week">
-      <ul class="clear">
-        <li>日</li>
-        <li>一</li>
-        <li>二</li>
-        <li>三</li>
-        <li>四</li>
-        <li>五</li>
-        <li>六</li>
-        <ul>
-    </div>
-    <div id="date">
-      <ul class="clear">
-        <li>30</li>
-        <li>31</li>
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-        <li>5</li>
-      </ul>
-      <ul class="clear">
-        <li>6</li>
-        <li>7</li>
-        <li>8</li>
-        <li>9</li>
-        <li>10</li>
-        <li>11</li>
-        <li>12</li>
-      </ul>
-      <ul class="clear">
-        <li>13</li>
-        <li>14</li>
-        <li>15</li>
-        <li>16</li>
-        <li>17</li>
-        <li>18</li>
-        <li>19</li>
-      </ul>
-      <ul class="clear">
-        <li>20</li>
-        <li>21</li>
-        <li>22</li>
-        <li>23</li>
-        <li>24</li>
-        <li>25</li>
-        <li>26</li>
-      </ul>
-      <ul class="clear">
-        <li>27</li>
-        <li>28</li>
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-        <li>5</li>
-      </ul>
-      <ul class="clear">
-        <li>27</li>
-        <li>28</li>
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-        <li>5</li>
-      </ul>
-    </div>
-    <div>
       <script>
         // function getDateNum(e) {
         //   console.log(e && e.target.nodeName) //打印发生事件的元素，再获取元素nodeName
@@ -164,7 +178,7 @@
         $("#date").click(function(e) {
           if (e.target.nodeName == "LI") { //先判断nodeName是LI
             if (e.target.className != "gray") { //点击本月的日期，显示在日期栏
-              $(".content").html(year + '年' + (month + 1) + '月' + $(e.target).html() + '日');
+              $(".date").html(year + '年' + (month + 1) + '月' + $(e.target).html() + '日');
               $(uls).find("li").not(".gray").attr("class", "");
               $(e.target).attr("class", "selected") //点击指定日期变红色
             } else { //点击灰色日期即（上个月或者下个月日期）切换到当月
@@ -184,7 +198,7 @@
         var totalDay;
         var uls = $("#date>ul"), //先找到ul元素
           list;
-        $(".content").html(year + '年' + (month + 1) + '月' + 1 + '日');
+        $(".date").html(year + '年' + (month + 1) + '月' + 1 + '日');
         //  console.log(uls);
 
 
@@ -250,7 +264,7 @@
             year += 1;
             month = 0;
           }
-          $(".content").html(year + "年" + (month + 1) + "月" + "1日");
+          $(".date").html(year + "年" + (month + 1) + "月" + "1日");
           //console.log(month+1);
           loadCalendar();
         }
@@ -262,7 +276,7 @@
             month = 11;
             year -= 1;
           }
-          $(".content").html(year + "年" + (month + 1) + "月" + "1日");
+          $(".date").html(year + "年" + (month + 1) + "月" + "1日");
           //console.log(month+1);
           loadCalendar();
         }

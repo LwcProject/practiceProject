@@ -1,0 +1,9 @@
+$("#myCarousel").carousel({
+  interval:3000
+  })
+$(".btn-left").click(function(){
+   $("#myCarousel").carousel('prev');
+})
+$(".btn-right").click(function(){
+   $("#myCarousel").carousel('next');
+})

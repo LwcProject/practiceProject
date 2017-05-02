@@ -1,0 +1,187 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+.header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background-color: white;
+  z-index: 1003;
+}
+.logo{
+  width: 247px;
+  height: 80px;
+  background: url(../img/logo.png) no-repeat 0 0;
+  float: left;
+}
+.header-nav{
+  width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media screen and (min-width:1200px) {
+  .header-nav{
+    width: 1170px;
+  }
+}
+@media screen and (min-width:768px) {
+  .header-nav{
+    width: 750px;
+  }
+}
+
+.content{
+  margin-left: 247px;
+  cursor: pointer;
+  list-style: none;
+  text-align: center;
+}
+.clear:after{
+  content: "";
+  display: table;
+  clear: both;
+}
+.content li{
+  width: 14.28%;
+  height: 80px;
+  float: left;
+  text-align: center;
+  line-height: 80px;
+  font-size: 16px;
+}
+.header-nav .nav-btn{
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  margin-top: -21.5px;
+}
+@media screen and (max-width:767px) {
+  .header-nav{
+    width: 500px;
+  }
+  .header-nav .nav-btn{
+    width: 46px;
+    height: 43px;
+    display: block;
+    background: url(../img/btn.png) no-repeat;
+  }
+  .content li{
+    float: none;
+    width: 14.28%;
+    height: 100px;
+  }
+}
+/*轮播部分*/
+.carousel{
+  margin-top: 80px;
+}
+.btn .btn-left , .btn .btn-right{
+  position: absolute;
+  top: 50%;
+  width: 50px;
+  height: 50px;
+  margin-top: -25px;
+  border-radius: 50%;
+  background-color: rgba(58,62,64,0.8);
+  text-align: center;
+  line-height: 50px;
+  font-size: 30px;
+  color: #fff;
+}
+.btn .btn-left {
+  left:5px;
+}
+.btn .btn-right{
+  right: 5px;
+}
+.carousel-indicators li{
+  background-color: rgb(125,125,125);
+  border: none;
+}
+.carousel-indicators li.active{
+  background-color: #EC7815;
+}
+.item .banner3-text{
+  position: absolute;
+  top: 100px;
+  left: 200px;
+}
+.item .banner4-text{
+  position: absolute;
+  top: 20px;
+  left: 100px;
+}
+.item .banner5-text{
+  position: absolute;
+  top: 100px;
+  left: 200px;
+}
+.item .banner-btn{
+  position: absolute;
+  bottom: 200px;
+  left: 200px;
+  width: 200px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 5px;
+  border: 2px solid white;
+  text-decoration: none;
+  font-size: 18px;
+  background-color: rgba(255,255,255,0);
+  transition: background-color 1s linear, color 1s linear ;
+
+}
+.item .banner-btn:hover{
+  color: #fff;
+  background-color: #1E8EC6;
+  transition: background-color 1s linear, color 1s linear ;
+}
+
+.part-one{
+  width: 100%;
+  margin-top: 50px;
+}
+.part-one .cloPa{
+  width: 800px;
+  margin: auto;
+  list-style: none;
+}
+.part-one .cloPa li{
+  width:200px;
+  height: 300px;
+  margin: auto;
+  float: left;
+  cursor: pointer;
+}
+.part-one .cloPa li:hover{
+
+  background-color: #55A6EA;
+}
+
+.part-one .cloPa li .bgimg{
+  width: 160px;
+  height: 160px;
+  margin-left: 20px;
+  background: url(../img/list_01.png) no-repeat center center;
+  background-size: 160px 160px;
+}
+.part-one .cloPa li .img-title{
+  width: 100%;
+  display: inline-block;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 18px;
+}
+.part-one .cloPa li .img-cont{
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  display: inline-block;
+}

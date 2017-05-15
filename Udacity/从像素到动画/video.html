@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      h1{
+        width: 200px;
+        margin: auto;
+        color:red;
+      }
+      .container{
+        width: 667px;
+        margin: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>G.E.M  再见</h1>
+    <div class="container">
+      <video autoplay  controls loop id="v">
+        <source src="./video/deng.mp4">
+      </video>
+      <canvas id="canvas"></canvas>
+    </div>
+    <script type="text/javascript">
+      var  canvas = document.querySelector("canvas");
+      var ctx = canvas.getContext("2d");
+
+      //制作灰度值
+      var makePixGrayScale = function (r, g, b, a){
+        var y = (0.3 * r) + (0.59 * g) + (0.11 * b);
+        return {r: y, g: y, b: y, a: y };
+      }
+
+      //制作灰度画面
+      function makeGrayScale() {
+        var r, g, b, a;
+        var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        var numPiexels  = imageData.data.length /4;
+        for(var i = 0; i < numPiexels; i++){
+          r = imageData.data[i * 4 + 0];
+          g = imageData.data[i * 4 + 1];
+          b = imageData.data[i * 4 + 2];
+          a = imageData.data[i * 4 + 3];
+          pixel = makePixGrayScale(r, g, b, a);
+          imageData.data[i * 4 + 0] = pixel.r;
+          imageData.data[i * 4 + 1] = pixel.g;
+          imageData.data[i * 4 + 2] = pixel.b;
+        }
+        ctx.putImageData(imageData, 0, 0);
+      }
+
+      //requestAnimFrame 浏览器兼容性
+      window.requestAnimFrame = (function(){
+        return  window.requestAnimationFrame       ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame    ||
+                function( callback ){
+                  window.setTimeout(callback, 1000 / 60);
+                };
+      })();
+
+
+      document.addEventListener('DOMContentLoaded', function(){
+        var canvas = document.querySelector("#canvas");
+        var ctx = canvas.getContext("2d");
+        var v = document.querySelector('#v');
+
+        //音视频加载完毕 触发loadedmetadata事件 设置canvas画布的宽高
+        v.addEventListener('loadedmetadata', function(){
+          canvas.width = this.videoWidth;
+          canvas.height = this.videoHeight;
+        });
+
+        //将每一帧的视频画面绘制在画布上
+        var draw = function() {
+          canvas.getContext('2d').drawImage(v, 0, 0);
+          //灰度转换
+          makeGrayScale();
+          requestAnimationFrame(draw);
+        }
+
+        //画出黑白电影   暂停或者结束时，不执行绘制
+        v.addEventListener('play', function() {
+          if (v.paused || v.ended) return;
+            draw();
+        })
+      })
+    </script>
+  </body>
+</html>

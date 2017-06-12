@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>jquery jsonp</title>
+    <script src='jquery.min.js'></script>
+
+  </head>
+  <body>
+    <script type="text/javascript">
+      // jsonp请求失败处理的方法
+      var wikiRequestTimeout = setTimeout(function() {
+        document.write('请求失败！');
+      }, 5000);
+    /* $.ajax({
+        url: "http://192.168.1.104:3000/remote.js?code=CA1998",
+        dataType: "jsonp",
+        jsonpCallback: 'flightHandler',
+        success: function(result) {
+          document.write('航班信息：票价' + result.price + '元，余票： '+ result.tickets + '张');
+          // jsonp 没有内置错误处理流程、方法
+          // 请求成功后清除定时器
+          clearTimeout(wikiRequestTimeout);
+        }
+      });*/
+      $.ajax({
+        url: "http://192.168.1.105:3000/remote.js",
+        dataType: "jsonp",
+        jsonpCallback: 'flightHandler',
+        data:{
+          code: "CA1998",
+        },
+        success: function(result) {
+          document.write('航班信息：票价' + result.price + '元，余票： '+ result.tickets + '张');
+          // jsonp 没有内置错误处理流程、方法
+          // 请求成功后清除定时器
+          clearTimeout(wikiRequestTimeout);
+        }
+      });
+    </script>
+  </body>
+</html>

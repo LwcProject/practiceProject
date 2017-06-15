@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cat Clicker</title>
+    <style media="screen">
+      body{
+        cursor: pointer;
+      }
+      .container {
+        /*height: 500px;*/
+      }
+      .clear {
+        content: "";
+        display: table;
+        clear: both;
+      }
+      #cat {
+        float: left;
+      }
+      #cat-list {
+        float: right;
+        list-style: none;
+      }
+      #cat-list li {
+        width: 300px;
+        border: 1px solid black;
+      }
+    </style>
+</head>
+<body>
+  <div class="clear">
+    <ul id="cat-list"></ul>
+    <div id="cat">
+      <h2 id="cat-name"></h2>
+      <div id="cat-count"></div>
+      <img id="cat-img" src="" alt="萌猫">
+    </div>
+  </div>
+  <div class="">
+    <button id="admin" type="button" name="button">admin</button>
+    <div class="adminRegion">
+      Name <input type="text" name="" value="" id="ipt-name">
+      <br>
+      ImgURL <input type="text" name="" value="" id="ipt-imgUrl">
+      <br>
+      Clicks <input type="text" name="" value="" id="ipt-clicks">
+      <br>
+      <button id="cancle" type="button" name="button">取消</button>
+      <button id="save" type="button" name="button">保存</button>
+    </div>
+  </div>
+</body>
+</html>
+<script src="jquery.js"></script>
+<script src="app.js"></script>

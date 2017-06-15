@@ -67,17 +67,17 @@ $(function() {
       model.newAttendance = {};
     },
 
-    // 添加学生姓名到新的attendace
+    // 添加学生姓名到新的attendance
     addNameToAttendance: function(name) {
       model.newAttendance[name] = [];
     },
 
-    // 设置新的attendace
+    // 设置新的attendance
     setNewAttendance: function(name, value) {
       model.newAttendance[name].push(value);
     },
 
-    // 获取新的attendace
+    // 获取新的attendance
     getNewAttendance: function() {
       return model.newAttendance;
     }
@@ -90,7 +90,7 @@ $(function() {
       this.tbody = $("tbody");
       _this.students = octopus.getStudentName();
       this.render();
-      this.CountMissed();
+      this.countMissed();
 
       // When a checkbox is clicked, update localStorage
       var $allCheckboxes = $('tbody input');
@@ -112,14 +112,14 @@ $(function() {
         });
 
         var newAttendance = octopus.getNewAttendance();
-        _this.CountMissed();
+        _this.countMissed();
         // 更新考勤信息
         localStorage.attendance = JSON.stringify(newAttendance);
       });
     },
 
     // 计算missed值
-    CountMissed: function() {
+    countMissed: function() {
       var $allMissed = $('tbody .missed-col'),
       $allCheckboxes = $('tbody input');
       $allMissed.each(function(index) {
@@ -170,7 +170,7 @@ $(function() {
       }
 
       // Check boxes, based on attendace records
-      // 遍历attendace 更新checkebox的状态
+      // 遍历attendance 更新checkbox的状态
       $.each(attendance, function(name, days) {
           var studentRow = $('tbody .name-col:contains(' + name + ')').parent('tr'),
               dayChecks = $(studentRow).children('.attend-col').children('input');

@@ -1,0 +1,116 @@
+mkdir 新建文件
+echo 内容  >文件名.文件后缀
+
+
+cd 目录名
+
+D:  进入D盘
+
+git命令
+***********************
+
+git add .   (添加新文件或更改文件)
+
+git status  (显示当前有变化的文件)
+
+git commit -m '  '内容'	备忘注释（内容自定）
+
+git status （显示当前有变化的文件 *检查是否还有未添加文件 *）
+
+git push origin  master
+
+*******************************
+
+弹框 输入用户名  lwcReber
+弹框 输入密码    lwc123456
+
+vpn代理
+ip:45.78.16.52
+端口：1736
+pd: coding123
+加密：rc4-md5
+
+
+ip: 67.216.198.158
+
+server port: 1533
+
+pwd: W1PBnq54kV
+加密 aes-256-cfb
+
+ss://cmM0LW1kNTpjb2RpbmcxMjNANDUuNzguMTYuNTI6MTczNg==
+
+************AJAX命令**********************
+ node ajax_test.js
+
+
+/************Gulp工具***************/
+1:
+git bash 命令
+// 进入指定文件夹
+cd 文件名/文件名...  cd g:   cd g:npm/***/***
+cd 盘符名:文件名/
+// 清空命令框显示内容
+clear
+
+// 打开文件夹  （在文件夹里打开命令行）
+explorer .
+
+进入文件名有空格的文件
+Unix, Linux, Mac OS 如果想进入当前目录下的'my files'文件夹，有如下三种方法(当然还可能有更多)：
+1 使用'\' $cd my\ files
+2 使用''' $cd my' 'files
+3 使用'"' $cd my" "files
+
+2:
+项目文件夹名不能有大写字母
+npm初始化
+npm init  (一路回车)
+
+安装或下载一个包（一个依赖）
+npm install --save-dev +依赖名称（需要版本：@版本号）npm install --save-dev jquery（@1.1.3）
+简写 npm i -D 依赖名称（需要版本：@版本号）
+
+如果npm不能下载文件，使用cnpm
+
+npm i -D http-server 安装npm server
+packagejson里面  "script"里面加   （上一句要加逗号） "start": "http-server -a 0.0.0.0 -p 8088"
+全局安装 npm install -global 依赖名称（需要版本：@版本号）
+
+3 安装gulp
+项目根目录创建gulpfile.js
+复制代码 
+按照代码的require 按照对应的插件
+ npm install i -D gulp
+
+在packge.json 查看已经安装的插件
+
+gulp +task任务名，运行任务
+
+
+web服务
+1 电脑打开localhost服务
+2 cmd  netstat 
+3 手机连接wifi cmd出现的ip地址 
+4 手机浏览器输入ip地址加上服务的端口 
+
+
+
+/*************Vue getting start ***************/
+
+命令行 
+npm install -g vue-cli
+
+npm init webpack my-project
+
+cd my-project 进入文件夹
+
+cnpm install 
+
+npm run dev
+
+打包
+npm run build 
+打包文件在dist文件夹 打开里面的index.html前开通一个web服务
+
+

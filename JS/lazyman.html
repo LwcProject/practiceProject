@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>lazyman</h1>
+    <a href="http://www.jianshu.com/p/f1b7cb456d37" target="_blank">原文答案</a>
+  </body>
+  <script type="text/javascript">
+  (function(window, undefined) {
+    /*观察者模式*/
+    // 任务列表
+    var taskList = [];
+    /*实现lazyman类*/
+    function LazyMan(str) {
+
+    }
+    LazyMan.prototype = {
+      // 注册任务
+      sleep: function(num) {
+        subscribe('sleep', num);
+        return this;
+      },
+      eat: function(str) {
+        subscribe('eat', str);
+        return this;
+      },
+      sleepFirst: function(num) {
+        subscribe('sleepFirst', num);
+        return this;
+      }
+    }
+
+    // 订阅
+    function subscribe() {
+      var params = {};
+      var arg = Array.prototype.slice.call(arguments);
+      if (arg.length == 0) {
+        throw new Error('subscribe参数不能为空');
+      }
+      // 消息名
+      params.msg = arg[0];
+      // 参数列表
+      params.arg = arg.slice(1);
+      if (params.msg === 'sleepFirst') {
+        // 插进队列最前面 unshift shift 不支持低版本浏览器
+        taskList.unshift(params)
+      } else {
+        taskList.push(params);
+      }
+    }
+
+    /*执行方法*/
+    function run(option) {
+      var msg = option.msg;
+      var arg = option.arg;
+      switch (msg) {
+        case 'lazyMan': lazyMan.call(null, arg); break;
+
+        case 'eat': eat.apply(null, arg); break;
+
+        case 'sleep': sleep.apply(null, arg); break;
+
+        case 'sleepFirst': sleepFirst.apply(null, arg); break;
+        default:;
+
+      }
+    }
+
+    /*发布方法*/
+    function publish() {
+      if (taskList.length > 0) {
+        run(taskList.shift());
+      }
+    }
+
+
+    // 打印
+    function lazyManLog(str) {
+      console.log(str);
+    }
+
+    // 具体方法 注意命令不是类的命名
+    function lazyMan(str) {
+      lazyManLog('this is ' + str);
+      publish();
+    }
+    function eat(str) {
+      lazyManLog('eat ' + str)
+      publish();
+    }
+
+    function sleep(num) {
+      setTimeout(function() {
+        lazyManLog('sleep after ' + num);
+        publish();
+      }, num * 1000);
+    }
+
+    function sleepFirst(num) {
+      setTimeout(function() {
+        lazyManLog('sleep after ' + num);
+        publish();
+      }, num * 1000);
+    }
+
+  // 注意这里的window.LazyMan是传进来的window的方法
+  window.LazyMan = function(str) {
+    subscribe('lazyMan', str);
+    setTimeout(function() {
+      publish();
+    }, 0);
+    // 返回一个LazyMan类  不是window.LazyMan 理解这里很重要
+    return new LazyMan();
+  }
+})(window);
+  LazyMan('lazy man').sleep(2).sleepFirst(5).eat('food');
+  </script>
+</html>

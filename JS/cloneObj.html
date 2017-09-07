@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>克隆对象</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      /*es5方法*/
+      function clone(obj) {
+        var newData;
+        // 初步判断不是object类型就返回
+        if (typeof(obj) !== "object" || obj === null) return obj;
+        // typeof判断数组也是object ，这步克隆数组
+        if (obj instanceof Array) {
+          newData = [];
+          for (var i = 0; i < obj.length; i++) {
+            if (typeof(obj[i]) === "object" && obj[i] !== null) {
+              newData[i] = clone(obj[i]); // 深度克隆
+            } else {
+              newData[i] = obj[i];
+            }
+          }
+        } else {
+          newData = {};
+          // 使用for-in 循环遍历对象
+          for(var a in obj) {
+            if (typeof(obj[a]) === "object" && obj[a] !== null) {
+              newData[a] = clone(obj[a]);
+            } else {
+              newData[a] = obj[a];
+            }
+          }
+        }
+        return newData;
+      }
+      var objA = {a: 1, b: "es5", c: true}, objB;
+      objB = clone(objA);
+
+      console.log(objB);
+      objB.d = 4;
+      console.log(objB);
+      // 修改objB ，objA没有影响
+      console.log(objA);
+
+      /*es6方法 简单直接解构赋值*/
+      const obj1 = {a: 1, b: "es6", c: false};
+      const obj2 = {d: 'obj2'};
+      const objCopy = {...obj1};
+      console.log(objCopy);
+      // 合拼也简单
+      const merge = {...obj1, ...obj2}
+      console.log(merge);
+    </script>
+  </body>
+</html>

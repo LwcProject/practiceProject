@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <style media="screen">
+            .nav {
+                width: 100%;
+                height: 300px;
+            }
+            ul {
+                list-style: none;
+            }
+            ul li {
+                float: left;
+                width: 50px;
+                height: 50px;
+                border: 1px solid #E7EEEF;
+                text-align: center;
+                line-height: 50px;
+                cursor: pointer;
+            }
+            /*#adlist {
+                list-style: none;
+            }
+            #adlist li {
+                float: left;
+                width: 50px;
+                height: 50px;
+            }*/
+            .active {
+                background-color: #25C8E0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="nav">
+
+        </div>
+        <ul>
+            <li id="firstPage">首页</li>
+            <li id="prePage">上一页</li>
+        </ul>
+        <ul id="adlist">
+            <li class="active">1</li>
+            <li>2</li>
+        </ul>
+        <ul>
+            <li id="nextPage">下一页</li>
+            <li id="lastPage">尾页</li>
+        </ul>
+        <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript">
+            // 假如url没有参数
+            // 最大页码
+            var pageNumMax = 5;
+
+            // 显示多少页码
+            var pageShow = 5; // 默认显示5个页码
+            // li显示的值在数组里面，通过操作数组来改变li的html
+            var pageList = [1,2,3,4,5];
+
+            // 根据数组的长度渲染页码li
+            function loadLi() {
+                var liShow = '';
+                for (var i = 1; i < pageList.length + 1; i++) {
+                    if (i == 1) {
+                        liShow = '<li class="active"> ' + i + '</li>';
+                    } else {
+                        liShow += '<li> ' + i + '</li>';
+                    }
+                }
+                $('#adlist').html(liShow);
+            }
+            // 开始渲染
+            loadLi();
+            // 禁用按钮功能
+            function disableButton(selector) {
+                $(selector).css({'cursor': 'not-allowed'});
+            }
+            function enableButton(selector) {
+                $(selector).css({'cursor': 'pointer'});
+            }
+
+            // 获取当前页
+            function getCurrentPage() {
+                var currentPage = 0; //默认第一页 ，渲染li下标是从0开始
+                var haveActive = false;
+                $('#adlist li').each(function (index) {
+                    if ($(this).attr('class') == 'active') {
+                        currentPage = index;
+                        haveActive = true;
+                        // 跳出遍历循环
+                        return false;
+                    }
+                });
+                // 循环一次都没有找到active
+                if (haveActive === false) {
+                    alert('获取当前页码出错');
+                }
+                return currentPage;
+            }
+            // 如果当前页是第一页就禁用首页和上页按钮
+            if (getCurrentPage() === 0) {
+                disableButton('#firstPage');
+                disableButton('#prePage');
+            }
+
+            // 如果最大页码小于显示的最大页码，就禁用最大页码后面的页码按钮
+            if (pageNumMax < pageList[pageList.length - 1]) {
+                for (var i = pageNumMax; i< pageList[pageList.length - 1]; i++) {
+                    disableButton('#adlist li:eq(' + i + ')');
+                }
+            }
+
+            // 如果最后一个显示的页码等于最大页数，禁用下一页和尾页
+            if (pageList[pageList.length - 1] == pageNumMax) {
+                disableButton('#nextPage');
+                disableButton('#lastPage');
+            }
+
+
+
+            // 点击对应的页码切换active
+            $('#adlist li').click(function() {
+                    console.log($(this));
+                    console.log(getCurrentPage());
+                    $('#adlist li').removeClass('active');
+                    $(this).addClass('active');
+                    // 如果当前页大于第一页就启用首页和尾页
+                    if (getCurrentPage() >= 1) {
+                        enableButton('#firstPage');
+                        enableButton('#prePage');
+                    } else {
+                        disableButton('#firstPage');
+                        disableButton('#prePage');
+                    }
+            });
+        </script>
+    </body>
+</html>

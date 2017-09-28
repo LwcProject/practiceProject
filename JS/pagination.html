@@ -42,9 +42,12 @@
             <li id="prePage">上一页</li>
         </ul>
         <ul id="adlist">
-            <li class="active">1</li>
-            <li>2</li>
-        </ul>
+            <li class="active">2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+       </ul>
         <ul>
             <li id="nextPage">下一页</li>
             <li id="lastPage">尾页</li>
@@ -77,9 +80,11 @@
             // 禁用按钮功能
             function disableButton(selector) {
                 $(selector).css({'cursor': 'not-allowed'});
+                $(selector).unbind('click');
             }
             function enableButton(selector) {
                 $(selector).css({'cursor': 'pointer'});
+                $(selector).bind('click');
             }
 
             // 获取当前页
@@ -88,7 +93,7 @@
                 var haveActive = false;
                 $('#adlist li').each(function (index) {
                     if ($(this).attr('class') == 'active') {
-                        currentPage = index;
+                        currentPage = parseInt($(this).html());
                         haveActive = true;
                         // 跳出遍历循环
                         return false;
@@ -100,11 +105,46 @@
                 }
                 return currentPage;
             }
-            // 如果当前页是第一页就禁用首页和上页按钮
-            if (getCurrentPage() === 0) {
-                disableButton('#firstPage');
-                disableButton('#prePage');
+
+            // 获取active的下标
+            function getActiveInd() {
+                var activeInd = 1; // 默认1
+                $('#adlist li').each(function (index) {
+                    if ($(this).attr('class') == 'active') {
+                        activeInd = index;
+                        // 跳出遍历循环
+                        return false;
+                    }
+                });
+                return activeInd;
             }
+
+            /*切换页码的active状态
+            * selector 页码选择器
+            * index active的下标
+            */
+            function switchActive(selector, index) {
+                $(selector).removeClass('active');
+                $(selector).eq(index).attr('class', 'active');
+            }
+
+            // 如果当前页是第一页就禁用首页和上页按钮
+            function firstPageDeal() {
+                if (getCurrentPage() === 1) {
+                    disableButton('#firstPage');
+                    disableButton('#prePage');
+                }
+            }
+            firstPageDeal();
+
+            // 如果当前页是尾页禁用下页和尾页
+            function lastPageDeal() {
+                if (getCurrentPage() === pageNumMax) {
+                    disableButton('#nextPage');
+                    disableButton('#lastPage');
+                }
+            }
+
 
             // 如果最大页码小于显示的最大页码，就禁用最大页码后面的页码按钮
             if (pageNumMax < pageList[pageList.length - 1]) {
@@ -113,18 +153,13 @@
                 }
             }
 
-            // 如果最后一个显示的页码等于最大页数，禁用下一页和尾页
+            // 如果最后一个显示的页码等于最大页数，禁用尾页
             if (pageList[pageList.length - 1] == pageNumMax) {
-                disableButton('#nextPage');
                 disableButton('#lastPage');
             }
 
-
-
             // 点击对应的页码切换active
             $('#adlist li').click(function() {
-                    console.log($(this));
-                    console.log(getCurrentPage());
                     $('#adlist li').removeClass('active');
                     $(this).addClass('active');
                     // 如果当前页大于第一页就启用首页和尾页
@@ -135,6 +170,69 @@
                         disableButton('#firstPage');
                         disableButton('#prePage');
                     }
+            });
+
+            // 点击上一页功能
+            // 分两种情况 1 active在第一个li时并且li的页码不是1，需要刷新页码数组 然后acitve一直在第一个li
+            // 2 actvie不在第一个时，不用刷新数组，直接切换active
+            function prePage() {
+                // 获取第一个li的页码，判断是不是一
+                var firstLiVal = parseInt($('#adlist li').eq(0).html());
+                var pageNum; // 获取要切换的页码
+                console.log(firstLiVal);
+                $('#adlist li').each(function(index, elem) {
+                    // active是不是在第一个li
+                    if ($(this).attr('class') == 'active' && index == 0 && firstLiVal >= 1) {
+                        console.log('active是在第一个');
+                        // TODO: 刷新数组操作
+                        // 结束each循环
+                        return false;
+                    } else {
+                        // TODO:切换active
+                        console.log('不是第一');
+                        pageNum = getActiveInd() - 1;
+                        console.log(pageNum);
+                        switchActive('#adlist li', pageNum);
+                        firstPageDeal();
+                        // 结束each循环
+                        return false;
+                    }
+                });
+            }
+            $('#prePage').click(function() {
+                prePage();
+            });
+
+            // 点击下一页功能
+            // 与上一页功能类似
+            // 1 当前active是否是最后一个li并且要li的值小于最大页码
+            // 不小于li的情况直接切换active
+            function nextPage() {
+                // 获取最后一li的页码，判断是不是最大页码
+                var lastLiVal = parseInt($('#adlist li').eq(0).html());
+                var pageNum; // 获取要切换的页码
+                console.log(lastLiVal);
+                $('#adlist li').each(function(index, elem) {
+                    // active是不是在第一个li
+                    if ($(this).attr('class') == 'active' && index == 4 && lastLiVal <= pageNumMax) {
+                        console.log('active是在第最后一个');
+                        // TODO: 刷新数组操作
+                        // 结束each循环
+                        return false;
+                    } else {
+                        // TODO:切换active
+                        console.log('不是最后一个');
+                        pageNum = getActiveInd() + 1;
+                        console.log(pageNum);
+                        switchActive('#adlist li', pageNum);
+                        lastPageDeal();
+                        // 结束each循环
+                        return false;
+                    }
+                });
+            }
+            $('#nextPage').click(function() {
+                nextPage();
             });
         </script>
     </body>

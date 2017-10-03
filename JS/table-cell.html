@@ -2,11 +2,147 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <title>tabe-cell</title>
+    <style media="screen">
+      .box{
+        width: 200px;
+        height: 200px;
+        display: table-cell;
+        vertical-align: middle;
+        border: 1px solid #777;
+        text-align: center;
+      }
 
-    <title name="sss">tabe-ceDDlyl</title>
-    <title>tabe-row</title>
+      .box2{
+        width: 300px;
+        height: 100px;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+      }
+      .box2 p {
+        width: 300px;
+        display: inline-block;
+      }
+
+      .box3{
+        display: table-cell;
+        width: 500px;
+        height: 100px;
+        padding-left: 50px;
+      }
+      .box-in{
+        width: 300px;
+        display: inline-block;
+        clear: both;
+      }
+      .lf{
+        float: left;
+      }
+      .rf{
+        float: right;
+      }
+
+      .list, .content{
+        width: 100px;
+        border: 1px solid red;
+        text-align: center;
+      }
+
+    .box-out4{
+      margin: 20px;
+    }
+    .box-in4{
+      display: table-cell;
+      vertical-align: middle;
+      height: 100px;
+      width: 400px;
+      text-align: center;
+    }
+    .item{
+      width: 100px;
+      height: 60px;
+      display: inline-block;
+      line-height: 60px;
+      border: 1px solid red;
+    }
+
+    ul{
+      list-style: none;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    #box5 li{
+      display: table-cell;
+      width: 150px;
+      text-align: center;
+      border: 1px solid red;
+    }
+    #box5 .f-w20{
+      border: 0px;
+    }
+    </style>
   </head>
-  <body id="body" name="ttt">
+  <body>
+    <!-- 图片定高不定高水平垂直居中 -->
+    <div class="box">
+      <img src="https://ss1.baidu.com/70cFfyinKgQFm2e88IuM_a/forum/pic/item/242dd42a2834349b406751a3ceea15ce36d3beb6.jpg" alt="">
+    </div>
+  <br>
+    <!-- 多行定高|不定高|定宽|不定宽水平垂直居中 -->
+    <div class="box2">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
+      <p>水平垂直局中水平垂直局中水平垂直局中水平垂直局中水平垂直局中水平垂直局中水平垂直局中水平垂直局中水平垂直局中水平垂直局中</p>
+    </div>
 
+    <!-- 左右浮动元素垂直居中 -->
+    <div class="box3">
+       <div class="box-in">
+         <div class="lf list">
+           我是左浮动元素
+         </div>
+         <div class="rf content">
+           我是右浮动元素
+         </div>
+       </div>
+    </div>
+
+    <!-- 一行多列水平垂直居中 -->
+    <div class="box-out4">
+      <div class="box-in4">
+        <div class="item">
+          我是item一
+        </div>
+        <div class="item">
+          我是item二
+        </div>
+        <div class="item">
+          我是item三
+        </div>
+      </div>
+    </div>
+
+    <!-- 多列等高布局 -->
+    <ul id="box5">
+      <li>
+        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507048200971&di=b7654ef4b3bec88af09c993eb8421419&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201601%2F08%2F20160108181509_vdRxQ.jpeg" alt="">
+        <p>表情包</p>
+        <p>处处都是表情包</p>
+      </li>
+      <li class="f-w20"></li>
+      <li>
+        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507048200971&di=b7654ef4b3bec88af09c993eb8421419&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201601%2F08%2F20160108181509_vdRxQ.jpeg" alt="">
+        <p>表情包</p>
+        <p>处处都是表情包 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </li>
+      <li class="f-w20"></li>
+      <li>
+        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507048200971&di=b7654ef4b3bec88af09c993eb8421419&imgtype=0&src=http%3A%2F%2Fimg5.duitang.com%2Fuploads%2Fitem%2F201601%2F08%2F20160108181509_vdRxQ.jpeg" alt="">
+        <p>表情包</p>
+        <p>处处都是表情包 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      </li>
+    </ul>
   </body>
 </html>

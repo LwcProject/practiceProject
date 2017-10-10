@@ -200,9 +200,8 @@
                 $('#adlist').find('li.active').removeClass('active').prev().addClass('active');
             }
             $('#prePage').click(function() {
-                console.log($(this).attr('style').indexOf('cursor'));
-                if ($(this).attr('style').indexOf('cursor') === 'not-allowed') return;
-                console.log('可以上页');
+                // 按钮禁用时不能按上一页
+                if ($(this).css('cursor') === 'not-allowed') return;
                 prePage();
             });
 
@@ -236,6 +235,7 @@
                 $('#adlist').find('li.active').removeClass('active').next().addClass('active')
             }
             $('#nextPage').click(function() {
+                if ($(this).css('cursor') === 'not-allowed') return;
                 nextPage();
             });
         </script>

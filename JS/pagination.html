@@ -96,7 +96,7 @@
                 var currentPage = 0; //默认第一页 ，渲染li下标是从0开始
                 var haveActive = false;
                 $('#adlist li').each(function (index) {
-                    if ($(this).attr('class') == 'active') {
+                    if ($(this).hasClass('active')) {
                         currentPage = parseInt($(this).html());
                         haveActive = true;
                         // 跳出遍历循环
@@ -114,8 +114,10 @@
             function getActiveInd() {
                 var activeInd = 1; // 默认1
                 $('#adlist li').each(function (index) {
-                    if ($(this).attr('class') == 'active') {
+                    console.log($(this));
+                    if ($(this).hasClass('active')) {
                         activeInd = index;
+                        console.log(activeInd);
                         // 跳出遍历循环
                         return false;
                     }
@@ -163,7 +165,7 @@
             }
 
             // 点击对应的页码切换active
-            $('#adlist li').click(function() {
+            $('#adlist').on("click", 'li', function() {
                 $('#adlist li').removeClass('active');
                 $(this).addClass('active');
                 console.log(9099999);
@@ -192,8 +194,9 @@
             // 分两种情况 1 active在第一个li时并且li的页码不是1，需要刷新页码数组 然后acitve一直在第一个li
             // 2 actvie不在第一个时，不用刷新数组，直接切换active
             function prePage() {
-                $('#adlist').find('li.active').removeClass('active').prev().addClass('active');
+
                 // 到第一页禁用按钮
+                console.log(getCurrentPage());
                 if (getCurrentPage() == 1) {
                     disableButton('#firstPage');
                     disableButton('#prePage');
@@ -210,9 +213,14 @@
                   pageList = [...newpageList];
                   // 渲染li
                   renderLi();
-                  console.log(newpageList, pageList);
+                  if (getCurrentPage() == 1) {
+                      disableButton('#firstPage');
+                      disableButton('#prePage');
+                      enableButton('#lastPage');
+                      enableButton('#nextPage');
+                  }
                 }
-
+                $('#adlist').find('li.active').removeClass('active').prev().addClass('active');
             }
             $('#prePage').click(function() {
                 // 按钮禁用时不能按上一页
@@ -228,14 +236,14 @@
 
                 enableButton('#firstPage');
                 enableButton('#prePage');
-                $('#adlist').find('li.active').removeClass('active').next().addClass('active');
 
+                console.log(lastLiVal,getActiveInd());
                 // 到达尾页禁用按钮
                 if(lastLiVal == pageNumMax && getActiveInd() == 4) {
                   disableButton('#nextPage');
                   disableButton('#lastPage');
                   return;
-                } else if (lastLiVal < pageNumMax && getActiveInd() == 4) {
+                } else if (lastLiVal <= pageNumMax && getActiveInd() == 4) {
                   // active到最后一个li时更新页码
                   // 遍历数组
                   var newpageList = [];
@@ -246,10 +254,8 @@
                   pageList = [...newpageList];
                   // 渲染li
                   renderLi();
-                  console.log(newpageList, pageList);
                 }
-
-
+                $('#adlist').find('li.active').removeClass('active').next().addClass('active');
             }
             $('#nextPage').click(function() {
                 if ($(this).css('cursor') === 'not-allowed') return;

@@ -19,6 +19,13 @@
                 text-align: center;
                 line-height: 50px;
                 cursor: pointer;
+                margin-left: 10px;
+                border-radius: 50%;
+                -moz-user-select: none;
+                -webkit-user-select: none;
+                -ms-user-select: none;
+                -khtml-user-select: none;
+                user-select: none;
             }
             /*#adlist {
                 list-style: none;
@@ -52,11 +59,11 @@
             <li id="nextPage">下一页</li>
             <li id="lastPage">尾页</li>
         </ul>
-        <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
         <script type="text/javascript">
             // 假如url没有参数
             // 最大页码
-            var pageNumMax = 6;
+            var pageNumMax = 10;
 
             // 显示多少页码
             var pageShow = 5; // 默认显示5个页码
@@ -114,10 +121,8 @@
             function getActiveInd() {
                 var activeInd = 1; // 默认1
                 $('#adlist li').each(function (index) {
-                    console.log($(this));
                     if ($(this).hasClass('active')) {
                         activeInd = index;
-                        console.log(activeInd);
                         // 跳出遍历循环
                         return false;
                     }
@@ -168,7 +173,6 @@
             $('#adlist').on("click", 'li', function() {
                 $('#adlist li').removeClass('active');
                 $(this).addClass('active');
-                console.log(9099999);
                 // 如果当前页大于第一页就启用首页和尾页
                 var curpage = getCurrentPage();
                 if (curpage > 1 && curpage < pageNumMax) {
@@ -187,40 +191,49 @@
                     disableButton('#nextPage');
                     disableButton('#lastPage');
                 }
-
+                // TODO:  请求点击对应的页码的数据
             });
+            // 更新页码
+            function updatePageNum(arr) {
+              $('#adlist li').each(function(index) {
+                $(this).html(arr[index]);
+              });
+            }
 
-            // 点击上一页功能
-            // 分两种情况 1 active在第一个li时并且li的页码不是1，需要刷新页码数组 然后acitve一直在第一个li
-            // 2 actvie不在第一个时，不用刷新数组，直接切换active
+            /* 点击上一页功能
+            * 分两种情况 1 active在第一个li时并且li的页码不是1，需要刷新页码数组 然后acitve一直在第一个li
+            * 2 actvie不在第一个时，不用刷新数组，直接切换active
+            */
             function prePage() {
-
-                // 到第一页禁用按钮
-                console.log(getCurrentPage());
-                if (getCurrentPage() == 1) {
-                    disableButton('#firstPage');
-                    disableButton('#prePage');
-                    enableButton('#lastPage');
-                    enableButton('#nextPage');
-                } else if(getActiveInd() == 0)  {
-                  // active到最后一个li时更新页码
-                  // 遍历数组
+              enableButton('#lastPage');
+              enableButton('#nextPage');
+              // 更新页码
+               if($('#adlist li').first().hasClass('active')) {
+                  // active一个li时更新页码
                   var newpageList = [];
                   pageList.map(function(val) {
                     var newVal = val - 1;
                     newpageList.push(newVal);
                   })
                   pageList = [...newpageList];
-                  // 渲染li
-                  renderLi();
+                  // 更新li中的页码
+                  updatePageNum(pageList);
                   if (getCurrentPage() == 1) {
                       disableButton('#firstPage');
                       disableButton('#prePage');
-                      enableButton('#lastPage');
-                      enableButton('#nextPage');
+
                   }
+                  return;
                 }
+
                 $('#adlist').find('li.active').removeClass('active').prev().addClass('active');
+                // TODO: 请求上一页的数据
+
+                // 到第一页禁用按钮
+                if (getCurrentPage()== 1) {
+                    disableButton('#firstPage');
+                    disableButton('#prePage');
+                }
             }
             $('#prePage').click(function() {
                 // 按钮禁用时不能按上一页
@@ -229,37 +242,76 @@
             });
 
             // 点击下一页功能
-            // 与上一页功能类似
             function nextPage() {
                 // 获取最后一个li的页码，判断是不是最大页码
-                var lastLiVal = parseInt($('#adlist li').eq(4).text());
-
+                var lastLiVal = parseInt($('#adlist li').last().html());
+                var isLastPage = $('#adlist li').last().hasClass('active');
                 enableButton('#firstPage');
                 enableButton('#prePage');
 
-                console.log(lastLiVal,getActiveInd());
-                // 到达尾页禁用按钮
-                if(lastLiVal == pageNumMax && getActiveInd() == 4) {
-                  disableButton('#nextPage');
-                  disableButton('#lastPage');
-                  return;
-                } else if (lastLiVal <= pageNumMax && getActiveInd() == 4) {
+              if (lastLiVal <= pageNumMax && isLastPage) {
                   // active到最后一个li时更新页码
-                  // 遍历数组
                   var newpageList = [];
                   pageList.map(function(val) {
                     var newVal = val + 1;
                     newpageList.push(newVal);
                   })
                   pageList = [...newpageList];
-                  // 渲染li
-                  renderLi();
+                  // 更新li中的页码
+                  updatePageNum(pageList);
+                  if ($('#adlist li').last().html() == pageNumMax) {
+                      disableButton('#lastPage');
+                      disableButton('#nextPage');
+                  }
+                  return;
                 }
+                // 先高亮再判断
                 $('#adlist').find('li.active').removeClass('active').next().addClass('active');
+                // TODO: 请求下一页的数据
+
+                // 到达尾页禁用按钮
+                if(lastLiVal == pageNumMax && $('#adlist li').last().hasClass('active')) {
+                  disableButton('#nextPage');
+                  disableButton('#lastPage');
+                }
             }
             $('#nextPage').click(function() {
                 if ($(this).css('cursor') === 'not-allowed') return;
                 nextPage();
+            });
+
+            // 首页
+            $('#firstPage').click(function() {
+              // 清空页码数组
+              pageList.length = 0;
+              for(var i = 1; i <= pageShow; i++) {
+                pageList.push(i);
+              }
+              updatePageNum(pageList);
+              // 第一页高亮
+              $('#adlist li').first().addClass('active').siblings().removeClass('active');
+              disableButton('#firstPage');
+              disableButton('#prePage');
+              enableButton('#lastPage');
+              enableButton('#nextPage');
+              // TODO: 请求首页的数据
+            });
+
+            // 尾页
+            $('#lastPage').click(function() {
+              // 清空页码数组
+              pageList.length = 0;
+              for(var i = pageNumMax - pageShow + 1; i <= pageNumMax; i++) {
+                pageList.push(i);
+              }
+              updatePageNum(pageList);
+              // 最后页码高亮
+              $('#adlist li').last().addClass('active').siblings().removeClass('active');
+              enableButton('#firstPage');
+              enableButton('#prePage');
+              disableButton('#nextPage');
+              disableButton('#lastPage');
+              // TODO: 请求尾页的数据
             });
         </script>
     </body>

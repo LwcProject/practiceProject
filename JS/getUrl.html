@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>获取路由参数</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+    function getParam(key) {
+          // 获取参数
+          // var url = window.location.search;
+          var url = '?fid=204';
+
+          // 正则筛选地址栏
+          var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+          // 匹配目标参数
+          var result = url.substr(1).match(reg);
+          //返回参数值
+          console.log(result);
+          // 编码转码
+          return result ? decodeURIComponent(result[2]) : null;
+    }
+    var urlparam = getParam('fid');
+    console.log(urlparam);
+    </script>
+  </body>
+</html>

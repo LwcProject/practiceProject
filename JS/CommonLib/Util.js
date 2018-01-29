@@ -125,5 +125,47 @@ var Util = {
         $(t).html('验证码');
       }
     }, 1000);
+  },
+
+  /**
+   * formToJson - 获取表单元素值，转换为json 需要借助jqurey
+   *
+   * @param  {type} formId 表单元素id
+   * @return {type}        返回表单json对象
+   */
+  formToJson: function(formId) {
+    var jsonObj = {};
+    var formSerializeArr = $("#" + formId).serializeArray();
+    //将json数组转化为一个json对象
+    console.log(formSerializeArr);
+    $.each(formSerializeArr, function () {
+        // 逻辑类似数组去重
+        if (jsonObj[this.name]) {
+            if (!jsonObj[this.name].push) {
+                // 转化为数组
+                jsonObj[this.name] = [jsonObj[this.name]];
+            }
+            jsonObj[this.name].push(this.value || "");
+        } else {
+            jsonObj[this.name] = this.value || "";
+        }
+    });
+
+    return jsonObj;
+  },
+  
+  /**
+   * inputNum - input输入框限制输入类型
+   *
+   * @param  {type} t   this
+   * @param  {type} len 限制长度
+   * @return {type}     无
+   * demo <input type="tel" placeholder="请输入手机号"  oninput="inputNum(this,11)">
+   */
+  inputNum: function(t, len) {
+        var val = t.value;
+        val = val.replace(/[^\d]/g, '');//非数字的都替换掉
+        val = val.substr(0, len);
+        t.value = val;
   }
 }

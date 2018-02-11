@@ -174,7 +174,7 @@ var Util = {
  * @param  {String} formId   表单id名
  * @return {Object}          返回该表单是否验证结果 flag为true验证通过
  */
-  vali (formId) {
+  vali: function(formId) {
     var msg = '', flag = true, vObj = $('.validate');
     if (formId) {
       vObj = $('#' + formId).find('.validate');
@@ -188,5 +188,77 @@ var Util = {
         }
     }
     return { msg: msg, flag: flag };
-  }
+  },
+
+  /**
+   * setCntTime - 设置倒计时
+   *
+   * @param  {type} time time 后台传回来的时间，
+   * @param  {type} id   id当前元素class的id  class命名方式cntTime_ + id;
+   * @return {type}      null
+   */
+  setCntTime: function(time, id) {
+      var _this = this;
+       var time = new Date(time);
+       setInterval(function () {
+           _this.count_down(time, id);
+       }, 300);//设置刷新时间
+   },
+
+   // 倒计时 time 需要是new Date后的值
+
+   /**
+    * count_down - 倒计时处理
+    *
+    * @param  {type} time new Date后的值
+    * @param  {type} id   元素   class命名方式cntTime_   后的id
+    * @return {type}      null
+    */
+   count_down: function(time, id) {
+       time_end = time.getTime();
+
+       var time_now = new Date(); // 获取当前时间
+       time_now = time_now.getTime();
+       var time_distance = time_end - time_now; // 时间差：活动结束时间减去当前时间
+       var int_hour, int_minute, int_second;
+       if (time_distance >= 0) {
+
+           // 相减的差数换算成天数
+           //int_day = Math.floor(time_distance / 86400000);
+           //time_distance -= int_day * 86400000;
+
+           // 相减的差数换算成小时
+           int_hour = Math.floor(time_distance / 3600000);
+           time_distance -= int_hour * 3600000;
+           // 相减的差数换算成分钟
+           int_minute = Math.floor(time_distance / 60000);
+           time_distance -= int_minute * 60000;
+
+           // 相减的差数换算成秒数
+           int_second = Math.floor(time_distance / 1000);
+
+           // 判断小时小于10时，前面加0进行占位
+           if (int_hour < 10)
+               int_hour = "0" + int_hour;
+
+           // 判断分钟小于10时，前面加0进行占位
+           if (int_minute < 10)
+               int_minute = "0" + int_minute;
+
+           // 判断秒数小于10时，前面加0进行占位
+           if (int_second < 10)
+               int_second = "0" + int_second;
+
+           // 显示倒计时效果
+           $('.cntTime_' + id).html(int_hour + ':' + int_minute + ':' + int_second);
+       } else {
+
+           //指定的结束日期结束后，往后推迟3天，或者称之为：往后加3天
+           //在这里可以非常灵活的设置：比如往后推迟2天或往后加2天：2*24*60*60*1000
+           //比如往后推迟1天或往后加1天：1*24*60*60*1000
+           //比如往后推迟2小时或往后加2小时：2*60*60*1000
+           // 比如往后推迟40分钟或往后加40分钟：40*1000这里设置根据大家需要，灵活设置。9 11 13 14 15 20 24 29 31 79
+           time_end = time_end + 3 * 24 * 60 * 60 * 1000;
+       }
+   },
 }

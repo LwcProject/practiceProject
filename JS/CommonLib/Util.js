@@ -189,159 +189,165 @@ var Util = {
     }
     return { msg: msg, flag: flag };
   },
+  // 商城商品倒计时插件
+  countTime: {
+    /**
+     * setCntTime - 设置倒计时
+     *
+     * @param  {type} time time 后台传回来的时间，
+     * @param  {type} id   id当前元素class的id  class命名方式cntTime_ + id;
+     * @return {type}      null
+     */
+    setCntTime: function(time, id) {
+        var _this = this;
+         var time = new Date(time);
+         setInterval(function () {
+             _this.count_down(time, id);
+         }, 300);//设置刷新时间
+     },
 
-  /**
-   * setCntTime - 设置倒计时
-   *
-   * @param  {type} time time 后台传回来的时间，
-   * @param  {type} id   id当前元素class的id  class命名方式cntTime_ + id;
-   * @return {type}      null
-   */
-  setCntTime: function(time, id) {
-      var _this = this;
-       var time = new Date(time);
-       setInterval(function () {
-           _this.count_down(time, id);
-       }, 300);//设置刷新时间
-   },
+     // 倒计时 time 需要是new Date后的值
 
-   // 倒计时 time 需要是new Date后的值
+     /**
+      * count_down - 倒计时处理
+      *
+      * @param  {type} time new Date后的值
+      * @param  {type} id   元素   class命名方式cntTime_   后的id
+      * @return {type}      null
+      */
+     count_down: function(time, id) {
+         time_end = time.getTime();
 
-   /**
-    * count_down - 倒计时处理
-    *
-    * @param  {type} time new Date后的值
-    * @param  {type} id   元素   class命名方式cntTime_   后的id
-    * @return {type}      null
-    */
-   count_down: function(time, id) {
-       time_end = time.getTime();
+         var time_now = new Date(); // 获取当前时间
+         time_now = time_now.getTime();
+         var time_distance = time_end - time_now; // 时间差：活动结束时间减去当前时间
+         var int_hour, int_minute, int_second;
+         if (time_distance >= 0) {
 
-       var time_now = new Date(); // 获取当前时间
-       time_now = time_now.getTime();
-       var time_distance = time_end - time_now; // 时间差：活动结束时间减去当前时间
-       var int_hour, int_minute, int_second;
-       if (time_distance >= 0) {
+             // 相减的差数换算成天数
+             //int_day = Math.floor(time_distance / 86400000);
+             //time_distance -= int_day * 86400000;
 
-           // 相减的差数换算成天数
-           //int_day = Math.floor(time_distance / 86400000);
-           //time_distance -= int_day * 86400000;
+             // 相减的差数换算成小时
+             int_hour = Math.floor(time_distance / 3600000);
+             time_distance -= int_hour * 3600000;
+             // 相减的差数换算成分钟
+             int_minute = Math.floor(time_distance / 60000);
+             time_distance -= int_minute * 60000;
 
-           // 相减的差数换算成小时
-           int_hour = Math.floor(time_distance / 3600000);
-           time_distance -= int_hour * 3600000;
-           // 相减的差数换算成分钟
-           int_minute = Math.floor(time_distance / 60000);
-           time_distance -= int_minute * 60000;
+             // 相减的差数换算成秒数
+             int_second = Math.floor(time_distance / 1000);
 
-           // 相减的差数换算成秒数
-           int_second = Math.floor(time_distance / 1000);
+             // 判断小时小于10时，前面加0进行占位
+             if (int_hour < 10)
+                 int_hour = "0" + int_hour;
 
-           // 判断小时小于10时，前面加0进行占位
-           if (int_hour < 10)
-               int_hour = "0" + int_hour;
+             // 判断分钟小于10时，前面加0进行占位
+             if (int_minute < 10)
+                 int_minute = "0" + int_minute;
 
-           // 判断分钟小于10时，前面加0进行占位
-           if (int_minute < 10)
-               int_minute = "0" + int_minute;
+             // 判断秒数小于10时，前面加0进行占位
+             if (int_second < 10)
+                 int_second = "0" + int_second;
 
-           // 判断秒数小于10时，前面加0进行占位
-           if (int_second < 10)
-               int_second = "0" + int_second;
+             // 显示倒计时效果
+             $('.cntTime_' + id).html(int_hour + ':' + int_minute + ':' + int_second);
+         } else {
 
-           // 显示倒计时效果
-           $('.cntTime_' + id).html(int_hour + ':' + int_minute + ':' + int_second);
-       } else {
-
-           //指定的结束日期结束后，往后推迟3天，或者称之为：往后加3天
-           //在这里可以非常灵活的设置：比如往后推迟2天或往后加2天：2*24*60*60*1000
-           //比如往后推迟1天或往后加1天：1*24*60*60*1000
-           //比如往后推迟2小时或往后加2小时：2*60*60*1000
-           // 比如往后推迟40分钟或往后加40分钟：40*1000这里设置根据大家需要，灵活设置。9 11 13 14 15 20 24 29 31 79
-           time_end = time_end + 3 * 24 * 60 * 60 * 1000;
-       }
-   },
-
-   /**
-    * loadHistory - 加载历史记录
-    *
-    * @return {type}  无
-    */
-    loadHistory: function() {
-     var nowHisData = localStorage.getItem("hisData"); //获取本地数据
-     if (nowHisData === null || undefined) {
-       return;
+             //指定的结束日期结束后，往后推迟3天，或者称之为：往后加3天
+             //在这里可以非常灵活的设置：比如往后推迟2天或往后加2天：2*24*60*60*1000
+             //比如往后推迟1天或往后加1天：1*24*60*60*1000
+             //比如往后推迟2小时或往后加2小时：2*60*60*1000
+             // 比如往后推迟40分钟或往后加40分钟：40*1000这里设置根据大家需要，灵活设置。9 11 13 14 15 20 24 29 31 79
+             time_end = time_end + 3 * 24 * 60 * 60 * 1000;
+         }
      }
-     $("#hisSearch").show();
-     var arr = nowHisData.split(" "); //字符串拆分成数组
-     var tmp = Util.getNewHisData(arr, 5); //生成前五个搜索的记录
+  },
 
-     // 渲染到页面
-     $("#hisSearchList").append(Pub.tppl(hisTmps, tmp));
-   },
+  // 历史记录插件
+  historyRecord: {
+    /**
+     * loadHistory - 加载历史记录
+     *
+     * @return {type}  无
+     */
+     loadHistory: function() {
+      var nowHisData = localStorage.getItem("hisData"); //获取本地数据
+      if (nowHisData === null || undefined) {
+        return;
+      }
+      $("#hisSearch").show();
+      var arr = nowHisData.split(" "); //字符串拆分成数组
+      var tmp = Util.getNewHisData(arr, 5); //生成前五个搜索的记录
 
-   /**
-    * pushToHistory - 添加历史记录
-    *
-    * @param  {String} data 搜索框的输入内容
-    * @return {type}      无
-    */
-    pushToHistory: function(data) {
-     // 去掉首位空格
-     data = data.replace(/(^\s*)|(\s*$)/g, '');
-     if (localStorage.getItem("hisData") === null || undefined) {
-       localStorage.setItem("hisData", data);
-     } else {
-       //把搜索内容存到localstorage里面 每次输入的字符 通过用' '与本地存储到本地数据串接成字符串再存到本地,类似字符串累加
-       var newHisDdata = localStorage.getItem("hisData") + ' ' + data;
-       localStorage.setItem("hisData", newHisDdata);
-     }
-   },
+      // 渲染到页面
+      $("#hisSearchList").append(Pub.tppl(hisTmps, tmp));
+    },
 
-   /**
-    * getNewHisData - 获取最新的历史记录
-    *
-    * @param  {Array} arr   localStorage的值
-    * @param  {Number} count 显示多少条记录
-    * @return {Array}       返回所需的数据
-    */
-   getNewHisData: function(arr, count) {
-     //执行deleteOtherSameInfo方法，获取没有重复的输入信息记录
-     var arr = Util.deleteOtherSameInfo(arr);
-     var length = arr.length;
-     var str = [];
-     //判断如果本地的值多于需要显示的历史数量，则取前多少个记录，否则直接显示所有数量
-     if (length >= count) {
-       for (var i = 0; i < count; i++) {
-         str.push({
-           name: arr[i] // 可以修改为自己需要的数据类型结构
-         });
-       }
-     } else {
-       for (var i = 0; i < length; i++) {
-         str.push({
-           name: arr[i]
-         });
-       }
-     }
-     return str;
-   },
+    /**
+     * pushToHistory - 添加历史记录
+     *
+     * @param  {String} data 搜索框的输入内容
+     * @return {type}      无
+     */
+     pushToHistory: function(data) {
+      // 去掉首位空格
+      data = data.replace(/(^\s*)|(\s*$)/g, '');
+      if (localStorage.getItem("hisData") === null || undefined) {
+        localStorage.setItem("hisData", data);
+      } else {
+        //把搜索内容存到localstorage里面 每次输入的字符 通过用' '与本地存储到本地数据串接成字符串再存到本地,类似字符串累加
+        var newHisDdata = localStorage.getItem("hisData") + ' ' + data;
+        localStorage.setItem("hisData", newHisDdata);
+      }
+    },
 
-   /**
-    * deleteOtherSameInfo - 删除重复搜索的历史记录，实质是数据去重，不改变localStorage存的值
-    *
-    * @param  {Array} arr localStorage的值
-    * @return {type}     返回去重后的数据
-    */
-   deleteOtherSameInfo: function (arr) {
-     var length = arr.length;
-     var str = [];
-     for (var i = length - 1; i >= 0; i--) {
-       //indexOf  返回-1  说明arr[i] 在str中并不存在
-       if (str.indexOf(arr[i]) == -1) {
-         str.push(arr[i]);
-       }
-     }
-     return str;
-   }
+    /**
+     * getNewHisData - 获取最新的历史记录
+     *
+     * @param  {Array} arr   localStorage的值
+     * @param  {Number} count 显示多少条记录
+     * @return {Array}       返回所需的数据
+     */
+    getNewHisData: function(arr, count) {
+      //执行deleteOtherSameInfo方法，获取没有重复的输入信息记录
+      var arr = Util.deleteOtherSameInfo(arr);
+      var length = arr.length;
+      var str = [];
+      //判断如果本地的值多于需要显示的历史数量，则取前多少个记录，否则直接显示所有数量
+      if (length >= count) {
+        for (var i = 0; i < count; i++) {
+          str.push({
+            name: arr[i] // 可以修改为自己需要的数据类型结构
+          });
+        }
+      } else {
+        for (var i = 0; i < length; i++) {
+          str.push({
+            name: arr[i]
+          });
+        }
+      }
+      return str;
+    },
+
+    /**
+     * deleteOtherSameInfo - 删除重复搜索的历史记录，实质是数据去重，不改变localStorage存的值
+     *
+     * @param  {Array} arr localStorage的值
+     * @return {type}     返回去重后的数据
+     */
+    deleteOtherSameInfo: function (arr) {
+      var length = arr.length;
+      var str = [];
+      for (var i = length - 1; i >= 0; i--) {
+        //indexOf  返回-1  说明arr[i] 在str中并不存在
+        if (str.indexOf(arr[i]) == -1) {
+          str.push(arr[i]);
+        }
+      }
+      return str;
+    }
+  }
+
 }

@@ -42,7 +42,54 @@ var Util = {
     // 编码转码
     return result ? decodeURIComponent(result[2]) : null;
   },
+  /**
+   * loadHtml - 渲染表单数据
+   *
+   * @param  {String} objs 根据Id填充数据
+   * @param  {String} formId 父级对象
+   * @return {String}     返回参数值，如果没有值返回null
+   */
+  loadForm: function(objs, formId) {
+        var formObj = $("#" + formId), namObj;
+        $.each(objs, function (nam, val) {
+            if (val == null) val = '';
+            namObj = formObj.find("#" + nam);
+            if (namObj.length === 0) return;
+           
+            if (namObj.hasClass('trans')) { val = namObj.data('value')[val] }
+            if (namObj.hasClass('difTime')) { val = jsDateDiff(val) }
+            if (namObj.hasClass('mult')) {
+                if (val.length > 0) {
+                    namObj.removeClass('nval').find('pre').html(val).next().val(val);
+                }
+                return
+            }
 
+            switch (namObj[0].localName) {
+                case 'select': namObj.children().removeAttr("selected").siblings('[value="' + val + '"]').attr("selected", true); break;
+                case 'input': namObj.val(val); break;
+                case 'img':
+                    var p = namObj.data('value') || "";
+                    if (val === '') p = '';
+                    if (!namObj.attr('onerror')) {
+                        namObj.attr({ onerror: "Pub.imgNoFind(this,1)" });
+                    }
+                    if (namObj.hasClass('ali')) {
+                        namObj.attr({ src: val + p });
+                    } else {
+                        namObj.attr({ src: 'http://ds-img.oss-cn-shanghai.aliyuncs.com/' + val + p });
+                    }
+                    break;
+                case 'a': var p = namObj.data('value');
+                    if (p == 'tel') {
+                        if (val != '') { namObj.attr('href', 'tel:' + val); if (namObj.off('click').hasClass('tel')) namObj.text(val); }
+                        else { namObj.removeAttr('href').on('click', function () { Pub.msgTip('暂未设置联系方式') }); }
+                    }
+                    break;
+                default: namObj.html(val);
+            }
+        });
+   },
   /**
    * template - 渲染数据
    *
@@ -348,6 +395,18 @@ var Util = {
       }
       return str;
     }
+  },
+  // 字符串去空格
+  trim: function(str) {
+      return str.replace(/^(\s|\xA0)+|(\s|\xA0)+$/g, "");
+  },
+  // 手机号码验证
+  checkPhone: function(val) {
+      if (val.toString().match(/^1\d{10}$/) == null) {
+          return false
+      } else {
+          return true;
+      }
   }
 
 }

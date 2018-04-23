@@ -407,6 +407,43 @@ var Util = {
       } else {
           return true;
       }
+  },
+  // 时间转化插件
+  TimeChange: {
+        // 时间小时转化 val小时值
+        hourChange: function(val) {
+            var timeHtml = '', timeCal = 0;
+            // 不超过一小时的
+            if (val < 1) {
+                timeCal =  parseInt(val * 60);
+                timeHtml = '<span>0</span>时 <span>' + timeCal + '</span>分';
+            } else {
+                // 超过一个小时的
+                var valStr = val.toString();
+                var timeInte = valStr.split('.')[0]; // 取整数部分
+                var timeDeci = '0.' + valStr.split('.')[1]; // 取小数部分
+                timeCal = parseInt(timeDeci * 60);
+
+                timeHtml = '<span>' + timeInte + '</span>时 <span>' + timeCal + '</span>分';
+            }
+            return timeHtml;
+        },
+        // 分钟转化 val分钟数
+        minuteChange: function(val) {
+            var timeHtml = '';
+            val =  parseInt(val);
+            // 不超过60分钟的
+            if (val < 60) {
+                timeHtml = '<span>0</span>时 <span>' + val + '</span>分';
+            } else {
+            // 超过60分钟的
+                var hour = parseInt(val / 60); // 获得时
+                var min = parseInt(val % 60); // 获得分钟
+
+                timeHtml = '<span>' + hour + '</span>时 <span>' + min + '</span>分';
+            }
+            return timeHtml;
+        }
   }
 
 }

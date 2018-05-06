@@ -8,7 +8,7 @@
      */
     runNum: function(val, params) {
       /*初始化动画参数*/
-      var valString = val || '70225800'
+      var valString = val;
       var par = params || {};
       var runNumJson = {
         el: $(this),
@@ -29,7 +29,7 @@
       var maxLength = runNumJson.addMax.toString(10).length;
       if(valLength < maxLength) {
         // runNumJson.length = maxLength;// 增加遍历次数
-        runNumJson.needZero = maxLength- valLength; // 需要多个0补位
+        runNumJson.needZero = maxLength - valLength; // 需要多个0补位
       }
       $._runNum._list(runNumJson.el, runNumJson);
       $._runNum._interval(runNumJson.el.children("li"), runNumJson);
@@ -40,6 +40,7 @@
     /*初始化数字列表*/
     _list: function(el, json) {
       var str = '';
+
       // 补0
       if(json.needZero) {
         for (var i = 0; i < json.needZero; i++) {

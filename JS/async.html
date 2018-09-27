@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      async function getCount(name) {
+        // 第一步异步加载函数
+        const symbol = await getStock(name);
+        // 拿到第一步异步加载的值放到第二步异步加载函数里面
+        const stockPrice = await getStockPrice(symbol);
+        return stockPrice;
+      }
+
+      function getStock (name) {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(name)
+          }, 2000)
+        })
+      }
+
+      function getStockPrice (sym) {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(sym)
+          }, 2000)
+        })
+      }
+
+      getCount('hello world').then((res) => {
+        console.log(res);
+      })
+    </script>
+  </body>
+</html>

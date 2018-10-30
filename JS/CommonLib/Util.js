@@ -444,6 +444,29 @@ var Util = {
             }
             return timeHtml;
         }
-  }
+  },
+   /**
+   * timeSort - 小时时间排序
+   *
+   * @param  {Array} arr  数据源
+   * @param  {Number} type 0 升序 时间从小到达    1 降序， 时间从大到小
+   * @return {Array}      返回排序后的数组
+   */
+  timeHourSort(arr, type) {
+      if (arr.length < 2) {
+          return arr
+      }
+      let t = type || 0
+      const s = "1970/1/1 "; // 注意后面有空格 ，添加年月日作为中间件，加上时间段，就可以进行对比
+      arr.sort( (a, b) => {
+          if (t == 0) {
+              return Date.parse(s + a.time[0]) > Date.parse(s + b.time[0])
+          } else {
+              return Date.parse(s + a.time[0]) < Date.parse(s + b.time[0])
+          }
+      })
+      return arr
+      console.log(arr);
+  }, 
 
 }

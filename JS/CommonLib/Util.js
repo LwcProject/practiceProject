@@ -468,5 +468,28 @@ var Util = {
       return arr
       console.log(arr);
   }, 
+   /**
+   * getTimeGap - 获取两个日期直接的日期列表，比如开始时间结束时间之间的日期
+   *
+   * @param  {Array} times  数据源
+   * @return {Array}      返回排序后的数组
+   */
+  getTimeGap (times) {
+    let day1 = new Date(times[0]);
+    let day2 = new Date(times[1]);
+    let newTimesArr = [];
+    // 计算相差天数
+    let gap = parseInt(Math.abs((day2 - day1) / (1000 * 60 * 60 * 24)))
+    for (let i = 1; i < gap; i++) {
+        let curDate = new Date()
+        // 获取第一天后面的第n天
+        curDate.setDate(day1.getDate() + i);
+        // 日期格式化
+        // curDate = util.formatDate(new Date(curDate))
+        newTimesArr.push(curDate)
+    }
+    newTimesArr = [times[0], ...newTimesArr, times[1]]
+    return newTimesArr
+  },
 
 }

@@ -10,7 +10,7 @@ class RPromise {
       setTimeout( () => {
         self.value = value
         self.status = 'fulfilled'
-        self.resolveCallbacks.map(cb => cb(this.value))
+        self.resolveCallbacks.map(cb => cb(self.value))
       }, 0)
     }
 
@@ -18,7 +18,7 @@ class RPromise {
       setTimeout(() => {
         self.error = error
         self.status = 'rejected'
-        self.rejectCallbacks.map(ca => cb(this.error))
+        self.rejectCallbacks.map(ca => cb(self.error))
       })
     }
     try {
